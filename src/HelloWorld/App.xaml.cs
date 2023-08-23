@@ -11,7 +11,7 @@
         public App()
         {
             InitializeComponent();
-
+            //Current.UserAppTheme = AppTheme.Light;
             MainPage = new AppShell();
         }
     }

@@ -3,20 +3,53 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HelloWorld.MainPage"
              xmlns:viewModels="clr-namespace:HelloWorld.ViewModels;assembly=HelloWorld"
+             xmlns:models="clr-namespace:HelloWorld.Models"
              x:DataType="viewModels:MainPageViewModel"
             >
 
-   
-    <ScrollView>
+
+    <!--<ScrollView>
         <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
             VerticalOptions="Center">
 
-            <Label Text="{Binding Result}"></Label>
-            <Button Command="{Binding   ClickMeCommand}" Text="点击"></Button>
-
+            <Entry Text="{Binding Result}"></Entry>
+            <Button Command="{Binding ReadCommand}" Text="Read"></Button>
+            <Button Command="{Binding WriteCommand}" Text="Write"></Button>
         </VerticalStackLayout>
-    </ScrollView>
+    </ScrollView>-->
 
+
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" ></RowDefinition> <!--你有多少占多少-->
+            <RowDefinition Height="Auto"></RowDefinition><!--我有多少占多少-->
+        </Grid.RowDefinitions>
+   
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <CollectionView>
+            
+        </CollectionView>
+        <ListView Grid.Row="0" Grid.Column="0"   Grid.RowSpan="3" ItemsSource="{ Binding  Poetries}">
+            <ListView.ItemTemplate >
+                <DataTemplate x:DataType="models:Poetry">
+                    <ViewCell >
+
+                        <Label  Text="{Binding Content}"  ></Label>
+
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Grid.Row="1" Grid.Column="0" Text="Initialize" Command="{Binding InitializeCommand}"></Button>
+        <Button Grid.Row="1" Grid.Column="1" Text="Add" Command="{Binding AddCommand}"></Button>
+        <Button Grid.Row="1" Grid.Column="2" Text="List" Command="{Binding ListCommand}"></Button>
+    </Grid>
+  
 </ContentPage>

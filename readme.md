@@ -21,9 +21,43 @@ https://learn.microsoft.com/zh-cn/dotnet/communitytoolkit/introduction
 https://learn.microsoft.com/zh-cn/dotnet/communitytoolkit/mvvm/
 ```
 ``` C#
-public class MainPageViewModel:ObservableObject
+public partial class MainPageViewModel:ObservableObject
 {
+    [ObservableProperty]
+    private string _result = string.Empty;
 
+     [RelayCommand]
+    public void ClickMe()
+    {
+        Result = "Hello World";
+    }
 }
-ViewModel 必须继承 ObservableObject
+ViewModel 必须继承 
+ [ObservableProperty] 生成属性
+ [RelayCommand] 生成命令事件
+使用特性让代码更简洁
 ```
+
+### ORM
+https://github.com/praeclarum/sqlite-net
+``` sh
+Install sqlite-net-pcl from NuGet.
+```
+``` C#
+public class Stock
+{
+	[PrimaryKey, AutoIncrement]
+	public int Id { get; set; }
+	public string Symbol { get; set; }
+}
+
+    private const string DbFileName = "poetrydb.sqlite3";
+    //当前程序安全读取
+    private static readonly string BbPath = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.
+            LocalApplicationData), DbFileName);
+
+var db = new SQLiteConnection(BbPath);
+db.CreateTable<Stock>();
+```
+

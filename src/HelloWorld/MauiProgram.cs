@@ -1,4 +1,5 @@
-﻿using HelloWorld.ViewModels;
+﻿using HelloWorld.Services;
+using HelloWorld.ViewModels;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
 
@@ -24,7 +25,8 @@ namespace HelloWorld
             //builder.Services.AddSingleton<AppShell>();
             //builder.Services.AddTransient<MainPage>();
             //builder.Services.AddSingleton<MainPageViewModel>();
-
+            builder.Services.AddSingleton<IKeyValueStorage, KeyValueStorage>();
+            builder.Services.AddSingleton<IPoetryStorage, PoetryStorage>();
             ///注入使用自带的构造函数注入方式 
             ConfigureServices(builder.Services);
 

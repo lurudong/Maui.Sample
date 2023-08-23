@@ -13,6 +13,8 @@ namespace HelloWorld
             InitializeComponent();
 
             BindingContext = mainPageViewModel;
+            //ListView listView = new ListView();
+            //listView.SetBinding(ItemsView.ItemsSourceProperty, "Poetries");
         }
 
     }
