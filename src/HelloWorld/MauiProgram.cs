@@ -27,6 +27,7 @@ namespace HelloWorld
             //builder.Services.AddSingleton<MainPageViewModel>();
             builder.Services.AddSingleton<IKeyValueStorage, KeyValueStorage>();
             builder.Services.AddSingleton<IPoetryStorage, PoetryStorage>();
+            builder.Services.AddSingleton<ITokenService, TokenService>();
             ///注入使用自带的构造函数注入方式 
             ConfigureServices(builder.Services);
 

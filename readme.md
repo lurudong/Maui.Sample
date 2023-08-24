@@ -59,5 +59,12 @@ public class Stock
 
 var db = new SQLiteConnection(BbPath);
 db.CreateTable<Stock>();
+
+这个在ios上和android上会报错
 ```
+
+
+假如要在ios上和android上都要创建数据库
+还需要添加 `dotnet add package SQLitePCLRaw.bundle_green --version 2.1.6`
+具体代码请看官网文档 https://learn.microsoft.com/zh-cn/dotnet/maui/data-cloud/database-sqlite
 

@@ -11,6 +11,7 @@
                 <ResourceDictionary>
                     <!--   local->HelloWorld命令空间  -->
                     <local:ServiceLocator  x:Key="ServiceLocator"></local:ServiceLocator>
+                 
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

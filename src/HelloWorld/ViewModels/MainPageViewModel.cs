@@ -14,10 +14,12 @@ public partial class MainPageViewModel : ObservableObject, IViewModel
 
 
     private readonly IPoetryStorage _poetryStorage;
+    private readonly ITokenService _tokenService;
 
-    public MainPageViewModel(IPoetryStorage poetryStorage)
+    public MainPageViewModel(IPoetryStorage poetryStorage, ITokenService tokenService)
     {
         _poetryStorage = poetryStorage;
+        _tokenService = tokenService;
     }
 
     [ObservableProperty]
@@ -59,6 +61,16 @@ public partial class MainPageViewModel : ObservableObject, IViewModel
     public async Task Initialize()
     {
         await _poetryStorage.InitializeAsync();
+    }
+
+    [ObservableProperty]
+    private string _json = string.Empty;
+
+    [RelayCommand]
+    public async Task LoadJson()
+    {
+        var josn = await _tokenService.GetToken();
+        Json = josn;
     }
     //[ObservableProperty]
     //private string _result = string.Empty;
