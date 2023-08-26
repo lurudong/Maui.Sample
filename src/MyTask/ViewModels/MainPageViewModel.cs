@@ -42,11 +42,11 @@ public sealed partial class MainPageViewModel : ObservableObject
     public void Delete(string text)
     {
 
-        //if (string.IsNullOrEmpty(text) || !Items.Contains(text))
-        //{
-        //    return;
-        //}
-        //Items.Remove(text);
+        if (string.IsNullOrEmpty(text) || !Items.Contains(text))
+        {
+            return;
+        }
+        Items.Remove(text);
     }
 
 

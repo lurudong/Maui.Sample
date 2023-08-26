@@ -22,7 +22,7 @@
                         <SwipeView.RightItems>
 
                             <SwipeItems >
-                                <SwipeItem   Command="{ Binding Source={RelativeSource  AncestorType={x:Type viewModels:MainPageViewModel}},Path= DeleteCommand }"  CommandParameter="{Binding .}">
+                                <SwipeItem   Command="{ Binding Source={RelativeSource  AncestorType={x:Type viewModels:MainPageViewModel}},Path= DeleteCommand }"  CommandParameter="{Binding}">
                                     <SwipeItem.Text>删除</SwipeItem.Text>
                                 </SwipeItem>
                                 <!--<SwipeItem  
