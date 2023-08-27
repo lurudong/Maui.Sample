@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
-using MyTask.ViewModels;
+using MyTaskBlazor.Data;
 
-namespace MyTask
+namespace MyTaskBlazor
 {
     public static class MauiProgram
     {
@@ -13,17 +13,16 @@ namespace MyTask
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
-            builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
-            builder.Services.AddSingleton<AppShell>();
-            builder.Services.AddSingleton<MainPage>();
-            builder.Services.AddSingleton<MainPageViewModel>();
-            builder.Services.AddSingleton<DetailPage>();
-            builder.Services.AddSingleton<DetailViewModel>();
+
+            builder.Services.AddMauiBlazorWebView();
+            builder.Services.AddBootstrapBlazor();
 #if DEBUG
+            builder.Services.AddBlazorWebViewDeveloperTools();
             builder.Logging.AddDebug();
 #endif
+
+            builder.Services.AddSingleton<WeatherForecastService>();
 
             return builder.Build();
         }

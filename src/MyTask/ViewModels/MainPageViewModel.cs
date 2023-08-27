@@ -6,11 +6,12 @@ namespace MyTask.ViewModels;
 
 public sealed partial class MainPageViewModel : ObservableObject
 {
-
-    public MainPageViewModel()
+    IConnectivity _connectivity;
+    public MainPageViewModel(IConnectivity connectivity)
 
     {
         Items = new ObservableCollection<string>();
+        _connectivity = connectivity;
     }
 
     [ObservableProperty]
@@ -25,13 +26,19 @@ public sealed partial class MainPageViewModel : ObservableObject
     /// </summary>
     /// <returns></returns>
     [RelayCommand]
-    public void Add()
+    public async Task Add()
     {
+
         if (string.IsNullOrWhiteSpace(Text) || Items.Contains(Text))
         {
 
             return;
+        }
 
+        if (_connectivity.NetworkAccess != NetworkAccess.Internet)
+        {
+            await Shell.Current.DisplayAlert("Error", "No Internet Connection", "OK");
+            return;
         }
 
         Items.Add(Text);
@@ -39,15 +46,26 @@ public sealed partial class MainPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public void Delete(string text)
+    async Task Delete(string text)
     {
+
 
         if (string.IsNullOrEmpty(text) || !Items.Contains(text))
         {
             return;
         }
+        if (_connectivity.NetworkAccess != NetworkAccess.Internet)
+        {
+            await Shell.Current.DisplayAlert("Error", "No Internet Connection", "OK");
+            return;
+        }
         Items.Remove(text);
     }
 
+    [RelayCommand]
+    async Task Tap(string value)
+    {
+        await Shell.Current.GoToAsync($"{nameof(DetailPage)}", new Dictionary<string, object> { { "Text", value } });
+    }
 
 }

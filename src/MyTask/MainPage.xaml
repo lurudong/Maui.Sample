@@ -4,6 +4,7 @@
              x:Class="MyTask.MainPage"
              xmlns:viewModels="clr-namespace:MyTask.ViewModels"
              x:DataType="viewModels:MainPageViewModel"
+             Title="我的任务"
              >
 
     <Grid RowDefinitions="100,Auto,*" ColumnDefinitions=".75*,.25*" Padding="10" RowSpacing="10" ColumnSpacing="10" >
@@ -11,49 +12,104 @@
         <Image Grid.ColumnSpan="2" Source="dotnet_bot.svg"  BackgroundColor="Transparent"  />
         <Entry Placeholder="请输入任务" Grid.Row="1" Text="{Binding Text}" />
         <Button Text="添加" Grid.Row="1" Grid.Column="1" Command="{Binding AddCommand}"  />
+        <CollectionView  Grid.Row="2" Grid.ColumnSpan="2"  ItemsSource="{Binding Items}" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate  x:DataType="{x:Type x:String}">
+                    <Grid Padding="0,0,0,10">
+                        <SwipeView>
 
-        <CollectionView Grid.Row="2" Grid.ColumnSpan="2"  ItemsSource="{Binding Items}" >
+
+                            <SwipeView.RightItems>
+
+                                <SwipeItems>
+                                 
+                                    <SwipeItemView>
+                                       
+                                        <StackLayout  Orientation="Horizontal" VerticalOptions="Center"    >
+                                            <Button Text="删除" BackgroundColor="LightGreen"  Style="{StaticResource CenteredButtonStyle}"  Command="{ Binding Source={RelativeSource  AncestorType={x:Type viewModels:MainPageViewModel}},Path= DeleteCommand }"  CommandParameter="{Binding .}" />
+                                        </StackLayout>
+                                    </SwipeItemView>
+                                </SwipeItems>
+                                <!--<SwipeItem   IconImageSource="delete.png" Text="删除"   BackgroundColor="LightPink"  
+                                    Command="{ Binding Source={RelativeSource  AncestorType={x:Type viewModels:MainPageViewModel}},Path= DeleteCommand }" CommandParameter="{Binding}"/>-->
+
+                            </SwipeView.RightItems>
+                            <SwipeView.Content>
+                                <Grid   Padding="0,0,5,0">
+
+                                    <Frame >
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer   Command="{ Binding Source={RelativeSource  AncestorType={x:Type viewModels:MainPageViewModel}},Path= TapCommand }"  CommandParameter="{Binding .}">
+                                                
+                                            </TapGestureRecognizer>
+                                        </Frame.GestureRecognizers>
+                                        <Label   Text="{Binding . }"  FontSize="15" />
+                                    </Frame>
+                                </Grid>
+
+                            </SwipeView.Content>
+
+                        </SwipeView>
+
+                    </Grid>
+
+                </DataTemplate>
+
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!--<CollectionView Grid.Row="2" Grid.ColumnSpan="2"  ItemsSource="{Binding Items}" >
 
             <CollectionView.ItemTemplate>
-                <!--设置源的外观-->
+                -->
+        <!--设置源的外观-->
+        <!--
                 <DataTemplate  x:DataType="{x:Type x:String}">
+               
                     <SwipeView>
 
                         <SwipeView.RightItems>
 
                             <SwipeItems >
-                                <SwipeItem   Command="{ Binding Source={RelativeSource  AncestorType={x:Type viewModels:MainPageViewModel}},Path= DeleteCommand }"  CommandParameter="{Binding}">
-                                    <SwipeItem.Text>删除</SwipeItem.Text>
-                                </SwipeItem>
-                                <!--<SwipeItem  
+
+                                <SwipeItem  
+                                    Text="删除"   
+                                    BackgroundColor="LightPink"  
+                                   Command="{ Binding Source={RelativeSource  AncestorType={x:Type viewModels:MainPageViewModel}},Path= DeleteCommand }" CommandParameter="{Binding}"/>
+                                -->
+        <!--<SwipeItem  
                                     Text="删除"   
                                     BackgroundColor="LightPink"  
                                     Command="{Binding DeleteCommand }"
                                             CommandParameter="{Binding Source={x:Reference resultEntry},Path= Text }"/>-->
 
-                                <!--<SwipeItem  
+        <!--<SwipeItem  
                                     Text="删除"   
                                     BackgroundColor="LightPink"  
                                     Command="{Binding DeleteCommand }"
                                             CommandParameter="{Binding Source={x:Reference resultEntry},Path= Text }"/>-->
-                                <!--<SwipeItem  Text="删除"  BackgroundColor="LightPink"   Command="{ Binding Source={RelativeSource  AncestorType={x:Type viewModels:MainPageViewModel}},Path= DeleteCommand }"    />-->
+        <!--<SwipeItem  Text="删除"  BackgroundColor="LightPink"   Command="{ Binding Source={RelativeSource  AncestorType={x:Type viewModels:MainPageViewModel}},Path= DeleteCommand }"    />-->
+        <!--
 
 
                             </SwipeItems>
                         </SwipeView.RightItems>
                        
-                        <Grid  Padding="0,0,0,10"  >
-                            <Frame  >
-                                <Label x:Name="resultEntry"  Text="{Binding . }"  FontSize="24"/>
-                  
-                            </Frame>
-                        </Grid>
                     </SwipeView>
 
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-        </CollectionView >
+        </CollectionView >-->
 
 
     </Grid>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="CenteredButtonStyle" TargetType="Button">
+                <Setter Property="HorizontalOptions" Value="Center"  />
+                <Setter Property="VerticalOptions" Value="Center" />
+
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 </ContentPage>
