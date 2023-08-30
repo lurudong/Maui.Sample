@@ -16,7 +16,9 @@ dotnet add package CommunityToolkit.Mvvm --version 8.2.1
 ```
 ### Maui社区工具包
 https://learn.microsoft.com/zh-cn/dotnet/communitytoolkit/maui/
-
+``` sh
+CommunityToolkit.Maui
+```
 官网文档:
 ```
 https://learn.microsoft.com/zh-cn/dotnet/communitytoolkit/introduction
