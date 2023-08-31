@@ -21,9 +21,9 @@
     {
 
 
-        var result= await App.Current.MainPage.ShowPopupAsync(new MauiPages.MauiPopupPage());
-        resultValue = result.ToString();
-        StateHasChanged();
+       await App.Current.MainPage.ShowPopupAsync(new MauiPages.MauiPopupPage());
+        // resultValue = result.ToString();
+        // StateHasChanged();
         
     }
 

@@ -40,5 +40,6 @@
 3.cs类下去掉ContentPage
 4.修改ComponentType 
 ```
+https://github.com/hjam40/Camera.MAUI
 
 

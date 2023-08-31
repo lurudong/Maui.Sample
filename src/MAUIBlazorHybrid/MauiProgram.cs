@@ -1,7 +1,7 @@
-﻿using CommunityToolkit.Maui;
+﻿using Camera.MAUI;
+using CommunityToolkit.Maui;
 using MAUIBlazorHybrid.Data;
 using Microsoft.Extensions.Logging;
-using ZXing.Net.Maui;
 
 namespace MAUIBlazorHybrid
 {
@@ -12,7 +12,7 @@ namespace MAUIBlazorHybrid
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .UseBarcodeReader()
+                .UseMauiCameraView() // Add the use of the plugging
                 .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {

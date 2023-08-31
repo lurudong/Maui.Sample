@@ -19,8 +19,8 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />-->
         <zxing:BarcodeGeneratorView
-  HeightRequest="100"
-  WidthRequest="100"
+  HeightRequest="50"
+  WidthRequest="50"
   ForegroundColor="DarkBlue"
   Value="https://dotnet.microsoft.com"
   Format="QrCode"
