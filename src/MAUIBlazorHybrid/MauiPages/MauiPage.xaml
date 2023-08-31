@@ -2,29 +2,28 @@
     <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MAUIBlazorHybrid.MauiPages.MauiPage"
-             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI"
-             xmlns:zxingoptions="clr-namespace:ZXing.Net.Maui;assembly=ZXing.Net.MAUI"
+           
              Title="MauiPage" BackgroundColor="Purple">
         <VerticalStackLayout
         VerticalOptions="Center" 
         HorizontalOptions="Center"
         Spacing="10">
 
-            <!--<Image Source="dotnet_bot.png"
+            <Image Source="dotnet_bot.png"
                WidthRequest="200"/>
 
             <Label 
             Text="不要忘记订阅!"
             FontSize="28"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />-->
-        <zxing:BarcodeGeneratorView
+            HorizontalOptions="Center" />
+        <!--<zxing:BarcodeGeneratorView
   HeightRequest="50"
   WidthRequest="50"
   ForegroundColor="DarkBlue"
   Value="https://dotnet.microsoft.com"
   Format="QrCode"
-  Margin="3" />
+  Margin="3" />-->
 
         <Button Text="关闭" Clicked="Button_Clicked" />
         </VerticalStackLayout>
