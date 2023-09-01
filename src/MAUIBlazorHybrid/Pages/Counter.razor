@@ -1,4 +1,5 @@
 ﻿@page "/counter"
+@using CommunityToolkit.Maui.Views
 
 <h1>Counter</h1>
 
@@ -6,7 +7,7 @@
 
 <button class="btn btn-primary" @onclick="OpenPage">打开Maui Page</button>
 <button class="btn btn-primary" @onclick="OpenPopup">打开Maui Popup</button>
-<input @bind="resultValue" />
+
 @code {
     private int currentCount = 0;
     private string resultValue;
@@ -21,7 +22,7 @@
     {
 
 
-       await App.Current.MainPage.ShowPopupAsync(new MauiPages.MauiPopupPage());
+      await App.Current.MainPage.ShowPopupAsync(new MauiPages.MauiPopupPage());
         // resultValue = result.ToString();
         // StateHasChanged();
         
