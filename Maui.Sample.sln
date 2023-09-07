@@ -18,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Todo", "src\Todo\Todo.cspro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyTaskBlazor", "src\MyTaskBlazor\MyTaskBlazor.csproj", "{D1F411A0-73EC-4FEB-8EDC-665E1E7038B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MAUIBlazorHybrid", "src\MAUIBlazorHybrid\MAUIBlazorHybrid.csproj", "{11680A88-7198-4954-A568-7E7D2176A7E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MAUIBlazorHybrid", "src\MAUIBlazorHybrid\MAUIBlazorHybrid.csproj", "{11680A88-7198-4954-A568-7E7D2176A7E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
