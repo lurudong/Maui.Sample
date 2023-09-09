@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Maui.Platform.MainPage">
+
+
+    <Grid Padding="10" ColumnSpacing="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" ></RowDefinition>
+            
+            <RowDefinition Height="Auto"></RowDefinition>
+           
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition ></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="0" TextColor="Green" Text="应用操作" FontSize="15"  FontAttributes="Bold" />
+        <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="1" TextColor="Green" Text="设备" FontSize="15" FontAttributes="Bold"/>
+        <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="2" TextColor="Green" Text="存储" FontSize="15" FontAttributes="Bold"/>
+
+        <Button Grid.Row="1" Grid.Column="0"  Clicked="Button_AppInfo" Text="应用信息" ></Button>
+        <Button Grid.Row="1" Grid.Column="1"  Text="浏览器" ></Button>
+        <Button Grid.Row="1" Grid.Column="2"  Text="Add1" ></Button>
+
+     
+
+    </Grid>
+
+    <!--<StackLayout Margin="20">
+        <Frame Padding="5">
+            <StackLayout Orientation="Horizontal"
+                         Spacing="15">
+                <Label Text="aa"
+         FontSize="18"
+         VerticalOptions="Center" />
+                <Label Text="Red"
+                       FontSize="18"
+                       VerticalOptions="Center" />
+            </StackLayout>
+        </Frame>
+    </StackLayout>-->
+</ContentPage>
