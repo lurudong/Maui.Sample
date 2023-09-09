@@ -2,10 +2,10 @@
 
 public class ModalHelper
 {
-    public static async Task ShowModalAsync(INavigation navigation, params IView[] views)
+    public static async Task ShowModalAsync(INavigation navigation, string title, params IView[] views)
     {
         var modalPage = new ContentPage();
-
+        modalPage.Title = title;
         var stackLayout = new StackLayout();
 
 

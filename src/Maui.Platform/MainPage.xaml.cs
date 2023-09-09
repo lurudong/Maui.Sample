@@ -3,66 +3,28 @@
     public partial class MainPage : ContentPage
     {
 
+        private readonly IAppInfo _appInfo;
 
-        public MainPage()
+        public MainPage(IAppInfo appInfo)
         {
             InitializeComponent();
+            _appInfo = appInfo;
 
-            //var openModalButton = new Button
-            //{
-            //    Text = "打开模态框"
-            //};
-
-            //openModalButton.Clicked += async (sender, args) =>
-            //{
-            //    var modalPage = new ContentPage
-            //    {
-            //        Content = new StackLayout
-            //        {
-            //            Children =
-            //        {
-            //            new Label
-            //            {
-            //                Text = "这是一个模态框",
-            //                FontAttributes = FontAttributes.Bold,
-            //                HorizontalOptions = LayoutOptions.CenterAndExpand,
-            //                VerticalOptions = LayoutOptions.CenterAndExpand
-            //            },
-            //            new Button
-            //            {
-            //                Text = "关闭模态框",
-            //                Command = new Command(async () =>
-            //                {
-            //                    await Navigation.PopModalAsync();
-            //                })
-            //            }
-            //        }
-            //        }
-            //    };
-
-            //    await Navigation.PushModalAsync(modalPage);
-            //};
-
-            //Content = new StackLayout
-            //{
-            //    Children = { openModalButton },
-            //    VerticalOptions = LayoutOptions.CenterAndExpand,
-            //    HorizontalOptions = LayoutOptions.CenterAndExpand
-            //};
         }
 
 
 
         private async void Button_AppInfo(object sender, EventArgs e)
         {
-            string name = AppInfo.Current.Name;
-            string package = AppInfo.Current.PackageName;
-            string version = AppInfo.Current.VersionString;
-            string build = AppInfo.Current.BuildString;
+            string name = _appInfo.Name;
+            string package = _appInfo.PackageName; //com.microsoft.myapp
+            string version = _appInfo.VersionString;
+            string build = _appInfo.BuildString;
 
             Frame frame1 = new Frame
             {
                 Padding = new Thickness(5),
+                BorderColor = Colors.Black,
                 Content = new StackLayout
                 {
                     Orientation = StackOrientation.Horizontal,
@@ -70,25 +32,168 @@
                     Children =
                 {
                    new Label{
-                       Text="应用程序名称:",
-                       TextColor = Colors.Red,
-                       FontSize = 18,
-                       VerticalOptions = LayoutOptions.Center,
+                       Text="程序名称:",
+                       TextColor = Colors.Red
+
                    },
                        new Label{
-                       Text = name,
-                       FontSize = 18,
-                       VerticalOptions = LayoutOptions.Center,
+                       Text = name
+                   }
+                }
+                }
+            };
+
+            Frame frame2 = new Frame
+            {
+                Padding = new Thickness(5),
+                BorderColor = Colors.Black,
+                Content = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Spacing = 15,
+                    Children =
+                {
+                   new Label{
+                       Text="程序标识符:", //例如 com.microsoft.myapp
+                       TextColor = Colors.Red
+
+                   },
+                       new Label{
+                       Text = package
+
+                   }
+                }
+                }
+            };
+
+            Frame frame3 = new Frame
+            {
+                Padding = new Thickness(5),
+                BorderColor = Colors.Black,
+                Content = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Spacing = 15,
+                    Children =
+                {
+                   new Label{
+                       Text="程序版本:", //例如 com.microsoft.myapp
+                       TextColor = Colors.Red
+
+                   },
+                       new Label{
+                       Text = version
+
                    }
                 }
                 }
             };
 
 
-            StackLayout stackLayout = new StackLayout { Margin = new Thickness(20) };
-            stackLayout.Add(frame1);
+            Frame frame4 = new Frame
+            {
+                Padding = new Thickness(5),
+                BorderColor = Colors.Black,
+                Content = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Spacing = 15,
+                    Children =
+                {
+                   new Label{
+                       Text="内部版本号:", //例如 com.microsoft.myapp
+                       TextColor = Colors.Red
 
-            await ModalHelper.ShowModalAsync(Navigation, stackLayout);
+                   },
+                       new Label{
+                       Text = build
+
+                   }
+                }
+                }
+            };
+
+
+            Frame frame5 = new Frame
+            {
+                Padding = new Thickness(5),
+                BorderColor = Colors.Black,
+                Content = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Spacing = 15,
+                    Children =
+                {
+                   new Label{
+                       Text="当前主题:",
+                       TextColor = Colors.Red
+
+                   },
+                       new Label{
+                       Text = _appInfo.RequestedTheme.ToString()
+
+                   }
+                }
+                }
+            };
+
+            Frame frame6 = new Frame
+            {
+                Padding = new Thickness(5),
+                BorderColor = Colors.Black,
+                Content = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Spacing = 15,
+                    Children =
+                {
+                   new Label{
+                       Text="布局方向:",
+                       TextColor = Colors.Red
+
+                   },
+                       new Label{
+                       Text = _appInfo.RequestedLayoutDirection.ToString()
+
+                   }
+                }
+                }
+            };
+
+
+            Frame frame7 = new Frame
+            {
+                Padding = new Thickness(5),
+                BorderColor = Colors.Black,
+                Content = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Spacing = 15,
+                    Children =
+                {
+                   new Label{
+                       Text="打包模型:",
+                       TextColor = Colors.Red
+
+                   },
+                      new Label{
+                       Text = _appInfo.PackagingModel==AppPackagingModel.Packaged ? "打包":"未打包"
+
+                   }
+                }
+                }
+            };
+
+
+            StackLayout stackLayout = new StackLayout { Margin = new Thickness(20), Spacing = 6 };
+            stackLayout.Add(frame1);
+            stackLayout.Add(frame2);
+            stackLayout.Add(frame3);
+            stackLayout.Add(frame4);
+            stackLayout.Add(frame5);
+            stackLayout.Add(frame6);
+            stackLayout.Add(frame7);
+            await ModalHelper.ShowModalAsync(Navigation, "应用信息", stackLayout);
 
         }
 

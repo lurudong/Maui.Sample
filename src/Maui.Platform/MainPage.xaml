@@ -34,14 +34,15 @@
 
     <!--<StackLayout Margin="20">
         <Frame Padding="5">
-            <StackLayout Orientation="Horizontal"
+            <StackLayout 
+                          Orientation="Horizontal"
                          Spacing="15">
-                <Label Text="aa"
-         FontSize="18"
-         VerticalOptions="Center" />
-                <Label Text="Red"
-                       FontSize="18"
-                       VerticalOptions="Center" />
+                <Label Text="应用程序标识符:"
+ 
+          />
+                <Label Text="com.microsoft.myapp"
+                       
+                       />
             </StackLayout>
         </Frame>
     </StackLayout>-->

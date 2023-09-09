@@ -17,6 +17,9 @@ namespace Maui.Platform
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddSingleton<IAppInfo>(AppInfo.Current);
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
