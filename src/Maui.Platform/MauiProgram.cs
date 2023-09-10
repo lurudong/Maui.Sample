@@ -19,7 +19,9 @@ namespace Maui.Platform
 
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<IAppInfo>(AppInfo.Current);
+            builder.Services.AddSingleton<ILauncher>(Launcher.Default);
 
+            builder.Services.AddSingleton<IMap>(Map.Default);
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

@@ -6,7 +6,11 @@ public class ModalHelper
     {
         var modalPage = new ContentPage();
         modalPage.Title = title;
-        var stackLayout = new StackLayout();
+        var stackLayout = new StackLayout()
+        {
+            VerticalOptions = LayoutOptions.CenterAndExpand,
+            HorizontalOptions = LayoutOptions.CenterAndExpand
+        };
 
 
         foreach (var view in views)
