@@ -12,6 +12,8 @@
            
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -22,11 +24,11 @@
         </Grid.ColumnDefinitions>
 
         <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="0" TextColor="Green" Text="应用操作" FontSize="15"  FontAttributes="Bold" />
-        <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="1" TextColor="Green" Text="设备" FontSize="15" FontAttributes="Bold"/>
+        <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="1" TextColor="Green" Text="通信" FontSize="15" FontAttributes="Bold"/>
         <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="2" TextColor="Green" Text="存储" FontSize="15" FontAttributes="Bold"/>
 
         <Button Grid.Row="1" Grid.Column="0"  Text="应用信息" Clicked="Button_AppInfo"></Button>
-        <Button Grid.Row="1" Grid.Column="1"  Text="aa" ></Button>
+        <Button Grid.Row="1" Grid.Column="1"  Text="设备功能"   Clicked="Contacts_Clicked"></Button>
         <Button Grid.Row="1" Grid.Column="2"  Text="Add1" ></Button>
 
         <Button Grid.Row="2" Grid.Column="0"  Text="浏览器" Clicked="BrowserOpen_Clicked" ></Button>
@@ -34,6 +36,8 @@
         <Button Grid.Row="3" Grid.Column="0"  Text="启动器" Clicked="Launcher_Clicked"></Button>
 
         <Button Grid.Row="4"  Grid.Column="0"  Text="地图与导航" Clicked="Map_Clicked"></Button>
+
+        <Button Grid.Row="5"  Grid.Column="0"  Text="权限" Clicked="Permissions_Clicked"></Button>
 
     </Grid>
 

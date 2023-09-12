@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using Communication = Microsoft.Maui.ApplicationModel.Communication;
 
 namespace Maui.Platform
 {
@@ -22,6 +23,8 @@ namespace Maui.Platform
             builder.Services.AddSingleton<ILauncher>(Launcher.Default);
 
             builder.Services.AddSingleton<IMap>(Map.Default);
+
+            builder.Services.AddSingleton<IContacts>(Communication.Contacts.Default);
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

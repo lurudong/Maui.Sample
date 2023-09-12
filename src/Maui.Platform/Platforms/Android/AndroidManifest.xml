@@ -3,9 +3,16 @@
 	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true"></application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
-
-
-
+	<uses-feature android:name="android.hardware.camera" />
+	<uses-feature android:name="android.hardware.camera.autofocus" />
+	<uses-feature android:name="android.hardware.location" android:required="false" />
+	<uses-feature android:name="android.hardware.location.gps" android:required="false" />
+	<uses-feature android:name="android.hardware.location.network" android:required="false" />
+	<!-- Required to access the user's location -->
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.READ_CONTACTS" />
+	<uses-permission android:name="android.permission.WRITE_CONTACTS" />
 	<queries>
 		<!--浏览器-->
 		<intent>
@@ -23,4 +30,7 @@
 			<data android:scheme="geo"/>
 		</intent>
 	</queries>
+
+
+
 </manifest>
