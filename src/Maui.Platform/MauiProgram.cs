@@ -25,6 +25,8 @@ namespace Maui.Platform
             builder.Services.AddSingleton<IMap>(Map.Default);
 
             builder.Services.AddSingleton<IContacts>(Communication.Contacts.Default);
+            builder.Services.AddSingleton<IBattery>(Battery.Default);
+            builder.Services.AddSingleton<IDeviceDisplay>(DeviceDisplay.Current);
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

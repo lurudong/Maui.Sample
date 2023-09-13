@@ -9,14 +9,18 @@ namespace Maui.Platform
         private readonly ILauncher _launcher;
         private readonly IMap _map;
         private readonly IContacts _contacts;
+        private readonly IBattery _battery;
+        private readonly IDeviceDisplay _deviceDisplay;
 
-        public MainPage(IAppInfo appInfo, ILauncher launcher = null, IMap map = null, IContacts contacts = null)
+        public MainPage(IAppInfo appInfo, ILauncher launcher = null, IMap map = null, IContacts contacts = null, IBattery battery = null, IDeviceDisplay deviceDisplay = null)
         {
             InitializeComponent();
             _appInfo = appInfo;
             _launcher = launcher;
             _map = map;
             _contacts = contacts;
+            _battery = battery;
+            _deviceDisplay = deviceDisplay;
         }
 
 
@@ -448,5 +452,258 @@ namespace Maui.Platform
                 await DisplayAlert("错误", $"{ex.Message}", "OK");
             }
         }
+
+
+
+        /// <summary>
+        /// 电池
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Battery_Clicked(object sender, EventArgs e)
+        {
+            //if (DeviceInfo.Platform == DevicePlatform.WinUI)
+            //{
+            //    await DisplayAlert("提示", $"该平台下无法使用", "OK");
+            //    return;
+            //}
+
+
+
+            Frame frame = new Frame
+            {
+
+                Content = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Spacing = 15,
+                    Children =
+                {
+                   new Label{
+                       Text="电池状态:",
+
+                   },
+                       new Label{
+                       Text=GetBatteryState(_battery.State),
+
+                   },
+                }
+                }
+            };
+
+
+            Frame frame1 = new Frame
+            {
+
+                Content = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Spacing = 15,
+                    Children =
+                {
+                   new Label{
+                       Text="电池电量:",
+
+                   },
+                       new Label{
+                       Text= $"电池还有{_battery.ChargeLevel * 100}%电。",
+
+                   },
+                }
+                }
+            };
+
+
+            Frame frame2 = new Frame
+            {
+
+                Content = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Spacing = 15,
+                    Children =
+                {
+                   new Label{
+                       Text="节能模式:",
+
+                   },
+                       new Label{
+                       Text=_battery.EnergySaverStatus.ToString(),
+
+                   },
+                }
+                }
+            };
+
+            Frame frame3 = new Frame
+            {
+
+                Content = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Spacing = 15,
+                    Children =
+                {
+                   new Label{
+                       Text="充电方式:",
+
+                   },
+                       new Label{
+                       Text=BatteryPowerSource(_battery.PowerSource),
+
+                   },
+                }
+                }
+            };
+
+
+            StackLayout stackLayout = new StackLayout { Margin = new Thickness(20), Spacing = 6 };
+            stackLayout.Add(frame);
+            stackLayout.Add(frame1);
+            stackLayout.Add(frame2);
+            stackLayout.Add(frame3);
+            await ModalHelper.ShowModalAsync(Navigation, "电池", stackLayout);
+
+        }
+
+        /// <summary>
+        /// 得到电池状态
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        private string GetBatteryState(BatteryState state)
+        {
+            return state switch
+            {
+                BatteryState.Charging => "电池正在充电。",
+                BatteryState.Discharging => "充电器未连接，电池正在放电。",
+                BatteryState.Full => "电池已满。",
+                BatteryState.NotCharging => "电池没有充电。",
+                BatteryState.NotPresent => "设备上没有电池。",
+                BatteryState.Unknown => "电池未知",
+                _ => "电池未知。"
+            };
+        }
+
+
+        /// <summary>
+        /// 得到充电方式
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        private string BatteryPowerSource(BatteryPowerSource source)
+        {
+            return source switch
+            {
+                Microsoft.Maui.Devices.BatteryPowerSource.Wireless => "无线充电",
+                Microsoft.Maui.Devices.BatteryPowerSource.Usb => "USB端口充电",
+                Microsoft.Maui.Devices.BatteryPowerSource.AC => "电池正在充电",
+                Microsoft.Maui.Devices.BatteryPowerSource.Battery => "设备没有充电",
+                _ => "未知"
+            };
+        }
+
+
+        /// <summary>
+        /// 设备显示信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void DeviceDisplay_Clicked(object sender, EventArgs e)
+        {
+
+            Frame frame = new Frame
+            {
+
+                Content = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Spacing = 15,
+                    Children =
+                {
+                       new Label{
+                       Text=ReadDeviceDisplay(),
+
+                   },
+                }
+                }
+            };
+
+
+            var @switch = new Microsoft.Maui.Controls.Switch
+            {
+
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+            };
+
+            @switch.Toggled += (sender, e) =>
+            {
+                _deviceDisplay.KeepScreenOn = e.Value;
+
+            };
+
+            Frame frame1 = new Frame
+            {
+
+                Content = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Spacing = 15,
+                    Children =
+                {
+                       new Label{
+                       HorizontalOptions = LayoutOptions.Center,
+                       VerticalOptions = LayoutOptions.Center,
+                       Text="使屏幕保持打开状态",
+
+                   },
+                       @switch
+                }
+                }
+            };
+            StackLayout stackLayout = new StackLayout { Margin = new Thickness(20), Spacing = 6 };
+            stackLayout.Add(frame);
+            stackLayout.Add(frame1);
+            await ModalHelper.ShowModalAsync(Navigation, "设备显示信息", stackLayout);
+        }
+
+        /// <summary>
+        /// 读取设备显示
+        /// </summary>
+        private string ReadDeviceDisplay()
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+            Func<DisplayOrientation, string> orientaion = at =>
+            {
+                return at switch
+                {
+                    DisplayOrientation.Landscape => "横向",
+                    DisplayOrientation.Portrait => "纵向",
+                    _ => "未知。"
+                };
+            };
+            Func<DisplayRotation, string> rotation = at =>
+            {
+                return at switch
+                {
+                    DisplayRotation.Rotation0 => "旋转0度",
+                    DisplayRotation.Rotation90 => "旋转90度",
+                    DisplayRotation.Rotation180 => "旋转180度",
+                    DisplayRotation.Rotation270 => "旋转270度",
+                    _ => "未知。"
+                };
+            };
+            sb.AppendLine($"像素宽度: {_deviceDisplay.MainDisplayInfo.Width} / 像素高度: {_deviceDisplay.MainDisplayInfo.Height}");
+            sb.AppendLine($"获取代表屏幕密度的值: {_deviceDisplay.MainDisplayInfo.Density}");
+            sb.AppendLine($"获取设备的方向: {orientaion(_deviceDisplay.MainDisplayInfo.Orientation)}");
+            sb.AppendLine($"方向的旋转角度: {rotation(_deviceDisplay.MainDisplayInfo.Rotation)}");
+            sb.AppendLine($"刷新率: {_deviceDisplay.MainDisplayInfo.RefreshRate}");
+
+
+            return sb.ToString();
+        }
+
     }
 }
