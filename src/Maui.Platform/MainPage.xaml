@@ -28,7 +28,7 @@
         </Grid.ColumnDefinitions>
 
         <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="0" TextColor="Green" Text="应用操作" FontSize="15"  FontAttributes="Bold" />
-        <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="1" TextColor="Green" Text="通信" FontSize="15" FontAttributes="Bold"/>
+        <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="1" TextColor="Green" Text="设备功能" FontSize="15" FontAttributes="Bold"/>
         <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="2" TextColor="Green" Text="存储" FontSize="15" FontAttributes="Bold"/>
 
 
