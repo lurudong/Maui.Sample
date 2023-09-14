@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text;
 
 namespace Maui.Platform
 {
@@ -11,8 +12,15 @@ namespace Maui.Platform
         private readonly IContacts _contacts;
         private readonly IBattery _battery;
         private readonly IDeviceDisplay _deviceDisplay;
+        private readonly IDeviceInfo _deviceInfo;
+        private readonly IAccelerometer _accelerometer;
+        private readonly IFlashlight _flashlight;
+        private readonly IGeocoding _geocoding;
+        private readonly IGeolocation _geolocation;
+        private readonly IHapticFeedback _hapticFeedback;
+        private readonly IVibration _vibration;
 
-        public MainPage(IAppInfo appInfo, ILauncher launcher = null, IMap map = null, IContacts contacts = null, IBattery battery = null, IDeviceDisplay deviceDisplay = null)
+        public MainPage(IAppInfo appInfo, ILauncher launcher = null, IMap map = null, IContacts contacts = null, IBattery battery = null, IDeviceDisplay deviceDisplay = null, IDeviceInfo deviceInfo = null, IAccelerometer accelerometer = null, IFlashlight flashlight = null, IGeocoding geocoding = null, IGeolocation geolocation = null, IHapticFeedback hapticFeedback = null, IVibration vibration = null)
         {
             InitializeComponent();
             _appInfo = appInfo;
@@ -21,6 +29,13 @@ namespace Maui.Platform
             _contacts = contacts;
             _battery = battery;
             _deviceDisplay = deviceDisplay;
+            _deviceInfo = deviceInfo;
+            _accelerometer = accelerometer;
+            _flashlight = flashlight;
+            _geocoding = geocoding;
+            _geolocation = geolocation;
+            _hapticFeedback = hapticFeedback;
+            _vibration = vibration;
         }
 
 
@@ -635,6 +650,7 @@ namespace Maui.Platform
 
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
+                ThumbColor = Colors.Pink
             };
 
             @switch.Toggled += (sender, e) =>
@@ -705,5 +721,412 @@ namespace Maui.Platform
             return sb.ToString();
         }
 
+        private async void DeviceInfo_Clicked(object sender, EventArgs e)
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+            sb.AppendLine($"设备的型号: {_deviceInfo.Model}");
+            sb.AppendLine($"设备的制造商: {_deviceInfo.Manufacturer}");
+            sb.AppendLine($"设备的名称: {_deviceInfo.Name}");
+            sb.AppendLine($"系统版本: {_deviceInfo.VersionString}");
+            sb.AppendLine($"获取设备类型: {_deviceInfo.Idiom}");
+            sb.AppendLine($"获取设备平台: {_deviceInfo.Platform}");
+
+            bool isVirtual = _deviceInfo.DeviceType switch
+            {
+                DeviceType.Physical => false,
+                DeviceType.Virtual => true,
+                _ => false
+            };
+
+            sb.AppendLine($"是否虚拟设备: {isVirtual}");
+
+
+
+            Frame frame = new Frame
+            {
+                Margin = new Thickness(0, 0, 0, 10),
+                Content = new StackLayout
+                {
+
+
+                    //Orientation = StackOrientation.Horizontal,
+                    Padding = new Thickness(5),
+
+                    Spacing = 15,
+                    Children =
+                {
+
+                       new Label{
+
+                      FontAttributes = FontAttributes.Bold,
+                      Text=sb.ToString()
+
+                      },
+                }
+                }
+            };
+
+            await ModalHelper.ShowModalAsync(Navigation, "设备信息", frame);
+        }
+
+        //设备传感器
+        private async void Accelerometer_Clicked(object sender, EventArgs e)
+        {
+            await DisplayAlert("提示", $"该功能还没有实现", "OK");
+        }
+
+        /// <summary>
+        /// 手电筒
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Flashlight_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                var @switch = new Microsoft.Maui.Controls.Switch
+                {
+
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Center,
+                    ThumbColor = Colors.Pink
+                };
+
+                @switch.Toggled += async (sender, e) =>
+                {
+
+                    if (e.Value)
+                    {
+                        await _flashlight.TurnOnAsync();
+                    }
+                    else
+                    {
+                        await _flashlight.TurnOffAsync();
+                    }
+                };
+                Frame frame = new Frame
+                {
+                    Margin = new Thickness(0, 0, 0, 10),
+                    Content = new StackLayout
+                    {
+
+
+                        //Orientation = StackOrientation.Horizontal,
+                        Padding = new Thickness(5),
+
+                        Spacing = 15,
+                        Children =
+                {
+
+                    @switch
+                }
+                    }
+                };
+                await ModalHelper.ShowModalAsync(Navigation, "手电筒", frame);
+            }
+            catch (FeatureNotSupportedException ex)
+            {
+                // Handle not supported on device exception
+            }
+            catch (PermissionException ex)
+            {
+                // Handle permission exception
+            }
+            catch (Exception ex)
+            {
+                // Unable to turn on/off flashlight
+            }
+
+        }
+
+        /// <summary>
+        /// 地理编码
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Geocoding_Clicked(object sender, EventArgs e)
+        {
+
+
+
+
+
+
+            var button = new Button
+            {
+                Margin = new Thickness(0, 0, 0, 10),
+                Text = "使用地理编码",
+
+            };
+            button.Clicked += Geocoding1_Clicked;
+
+            var button1 = new Button
+            {
+                Margin = new Thickness(0, 0, 0, 10),
+                Text = "使用地理编码",
+
+            };
+            button1.Clicked += GetGeocodeReverseData;
+
+            await ModalHelper.ShowModalAsync(Navigation, "地理编码", button, button1);
+
+        }
+
+        private async void Geocoding1_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                string address = "Microsoft Building 25 Redmond WA USA";
+                IEnumerable<Location> locations = await _geocoding.GetLocationsAsync(address);
+
+                Location location = locations?.FirstOrDefault();
+
+
+                if (location != null)
+                {
+                    await DisplayAlert("提示", $"纬度: {location.Latitude}, 经度: {location.Longitude}, 高度: {location.Altitude}", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                await DisplayAlert("错误", $"错误为:{ex.Message}", "OK");
+            }
+        }
+
+        private async void GetGeocodeReverseData(object sender, EventArgs e)
+        {
+            try
+            {
+                double latitude = 47.673988;
+                double longitude = -122.121513;
+                IEnumerable<Placemark> placemarks = await _geocoding.GetPlacemarksAsync(latitude, longitude);
+                Placemark placemark = placemarks?.FirstOrDefault();
+                if (placemark != null)
+                {
+                    StringBuilder sb = new StringBuilder();
+
+                    sb.AppendLine($"行政区域: {placemark.AdminArea}");
+                    sb.AppendLine($"国家代码: {placemark.CountryCode}");
+                    sb.AppendLine($"国家名称: {placemark.CountryName}");
+                    sb.AppendLine($"功能名称: {placemark.FeatureName}");
+                    sb.AppendLine($"地理位置: {placemark.Locality}");
+                    sb.AppendLine($"邮政编码: {placemark.PostalCode}");
+                    sb.AppendLine($"子管理区域: {placemark.SubAdminArea}");
+                    sb.AppendLine($"次级地点: {placemark.SubLocality}");
+                    sb.AppendLine($"次干道: {placemark.SubThoroughfare}");
+                    sb.AppendLine($"大道: {placemark.Thoroughfare}");
+                    await DisplayAlert("提示", $"地理编码:{sb.ToString()}", "地理编码");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                await DisplayAlert("错误", $"错误为:{ex.Message}", "OK");
+            }
+        }
+
+        private async void Geolocation_Clicked(object sender, EventArgs e)
+        {
+
+
+
+            var lastButton = new Button
+            {
+
+                Margin = new Thickness(0, 0, 0, 10),
+                Text = "获取最后一个已知位置",
+                Command = new Command(async () => await GetCachedLocation())
+            };
+
+            var currButton = new Button
+            {
+
+                Margin = new Thickness(0, 0, 0, 10),
+                Text = "获取当前位置",
+                Command = new Command(async () => await GetCurrentLocation())
+            };
+
+
+            var checkMockButton = new Button
+            {
+
+                Margin = new Thickness(0, 0, 0, 10),
+                Text = "两个位置之间的距离",
+                Command = new Command(async () => await 两个位置之间的距离())
+            };
+
+            await ModalHelper.ShowModalAsync(Navigation, "地理位置", lastButton, currButton, checkMockButton);
+
+        }
+
+        /// <summary>
+        /// 获取最后一个已知位置
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetCachedLocation()
+        {
+            try
+            {
+
+                Location location = await _geolocation.GetLastKnownLocationAsync();
+
+                if (location != null)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine($"纬度: {location.Latitude}");
+                    sb.AppendLine($"经度: {location.Longitude}");
+                    sb.AppendLine($"高度: {location.Altitude}");
+                    await DisplayAlert("提示", $"{sb.ToString()}", "OK");
+                    return;
+                }
+            }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+
+            }
+            catch (FeatureNotEnabledException fneEx)
+            {
+
+            }
+            catch (PermissionException pEx)
+            {
+                // Handle permission exception
+            }
+            catch (Exception ex)
+            {
+                // Unable to get location
+            }
+            await DisplayAlert("提示", $"None", "OK");
+        }
+
+
+
+
+        /// <summary>
+        /// 获取当前位置
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetCurrentLocation()
+        {
+            try
+            {
+
+
+                GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+
+
+
+                Location location = await _geolocation.GetLocationAsync(request);
+
+                if (location != null)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine($"纬度: {location.Latitude}");
+                    sb.AppendLine($"经度: {location.Longitude}");
+                    sb.AppendLine($"高度: {location.Altitude}");
+                    await DisplayAlert("提示", $"{sb.ToString()}", "OK");
+                    return;
+                }
+
+            }
+            // Catch one of the following exceptions:
+            //   FeatureNotSupportedException
+            //   FeatureNotEnabledException
+            //   PermissionException
+            catch (Exception ex)
+            {
+                // Unable to get location
+            }
+            finally
+            {
+
+            }
+            await DisplayAlert("提示", $"无", "OK");
+        }
+
+        private async Task 两个位置之间的距离()
+        {
+            Location boston = new Location(42.358056, -71.063611);
+            Location sanFrancisco = new Location(37.783333, -122.416667);
+
+            double miles = Location.CalculateDistance(boston, sanFrancisco, DistanceUnits.Miles);
+            await DisplayAlert("提示", $"两个位置之间距离:{miles}", "OK");
+        }
+
+
+        /// <summary>
+        /// 触觉反馈
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Haptic_Clicked(object sender, EventArgs e)
+        {
+
+
+            var shortButton = new Button
+            {
+
+                Margin = new Thickness(0, 0, 0, 10),
+                Text = "点击触觉反馈",
+                Command = new Command(() => _hapticFeedback.Perform(HapticFeedbackType.Click))
+            };
+
+            var longPressButton = new Button
+            {
+
+                Margin = new Thickness(0, 0, 0, 10),
+                Text = "轻敲触觉反馈",
+                Command = new Command(() => _hapticFeedback.Perform(HapticFeedbackType.LongPress))
+            };
+
+
+
+
+            await ModalHelper.ShowModalAsync(Navigation, "触觉反馈消息", shortButton, longPressButton);
+        }
+        /// <summary>
+        /// 振动
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Vibration_Clicked(object sender, EventArgs e)
+        {
+
+            try
+            {
+
+                int secondsToVibrate = Random.Shared.Next(1, 7);
+                TimeSpan vibrationLength = TimeSpan.FromSeconds(secondsToVibrate);
+                var button1 = new Button
+                {
+
+                    Margin = new Thickness(0, 0, 0, 10),
+                    Text = "打开振动",
+                    Command = new Command(() => _vibration.Vibrate(vibrationLength))
+                };
+
+                var button2 = new Button
+                {
+
+                    Margin = new Thickness(0, 0, 0, 10),
+                    Text = "关闭振动",
+                    Command = new Command(() => _vibration.Cancel())
+                };
+
+                await ModalHelper.ShowModalAsync(Navigation, "振动", button1, button2);
+            }
+            catch (Exception ex)
+            {
+
+                await DisplayAlert("错误", $"{ex.Message}", "OK");
+            }
+        }
     }
 }
+
+
+

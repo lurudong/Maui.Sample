@@ -8,8 +8,8 @@ public class ModalHelper
         modalPage.Title = title;
         var stackLayout = new StackLayout()
         {
-            VerticalOptions = LayoutOptions.CenterAndExpand,
-            HorizontalOptions = LayoutOptions.CenterAndExpand
+            Margin = 20
+
         };
 
 

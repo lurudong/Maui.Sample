@@ -12,6 +12,10 @@ namespace Maui.Platform
             builder
                 .UseMauiApp<App>()
                  .UseMauiCommunityToolkit()
+                  .ConfigureEssentials(essentials =>
+                  {
+                      essentials.UseMapServiceToken("Izj5JILe1xYXL0hTHW26~8oiFE11ZYPqSyuxSbUcy0w~AgBWKjMLiO3UjxZv2nck0nYUhmXSv_VE59N6_rLQmO0M_Owr_snfN7cDsbrQGNtI");
+                  })
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -27,6 +31,13 @@ namespace Maui.Platform
             builder.Services.AddSingleton<IContacts>(Communication.Contacts.Default);
             builder.Services.AddSingleton<IBattery>(Battery.Default);
             builder.Services.AddSingleton<IDeviceDisplay>(DeviceDisplay.Current);
+            builder.Services.AddSingleton<IDeviceInfo>(DeviceInfo.Current);
+            builder.Services.AddSingleton<IAccelerometer>(Accelerometer.Default);
+            builder.Services.AddSingleton<IFlashlight>(Flashlight.Default);
+            builder.Services.AddSingleton<IGeocoding>(Geocoding.Default);
+            builder.Services.AddSingleton<IGeolocation>(Geolocation.Default);
+            builder.Services.AddSingleton<IHapticFeedback>(HapticFeedback.Default);
+            builder.Services.AddSingleton<IVibration>(Vibration.Default);
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

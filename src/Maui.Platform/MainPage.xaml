@@ -7,9 +7,13 @@
     <Grid Padding="5" ColumnSpacing="5"  RowSpacing="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" ></RowDefinition>
-            
+
             <RowDefinition Height="Auto"></RowDefinition>
-           
+
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -29,10 +33,16 @@
 
 
         <Button Grid.Row="1" Grid.Column="0"  Text="应用信息" Clicked="Button_AppInfo"></Button>
-        
+
         <Button Grid.Row="1" Grid.Column="1"  Text="电池"  Clicked="Battery_Clicked" ></Button>
         <Button Grid.Row="2" Grid.Column="1"  Text="设备显示信息"  Clicked="DeviceDisplay_Clicked" ></Button>
-        
+        <Button Grid.Row="3" Grid.Column="1"  Text="设备信息"  Clicked="DeviceInfo_Clicked" ></Button>
+        <Button Grid.Row="4" Grid.Column="1"  Text="传感器"  Clicked="Accelerometer_Clicked" ></Button>
+        <Button Grid.Row="5" Grid.Column="1"  Text="手电筒"  Clicked="Flashlight_Clicked" ></Button>
+        <Button Grid.Row="6" Grid.Column="1"  Text="地理编码信息"  Clicked="Geocoding_Clicked" ></Button>
+        <Button Grid.Row="7" Grid.Column="1"  Text="地理位置信息"  Clicked="Geolocation_Clicked" ></Button>
+        <Button Grid.Row="8" Grid.Column="1"  Text="触觉反馈"     Clicked="Haptic_Clicked" ></Button>
+        <Button Grid.Row="8" Grid.Column="1"  Text="振动"        Clicked="Vibration_Clicked" ></Button>
         <Button Grid.Row="1" Grid.Column="2"  Text="Add1" ></Button>
 
         <Button Grid.Row="2" Grid.Column="0"  Text="浏览器" Clicked="BrowserOpen_Clicked" ></Button>
@@ -45,10 +55,12 @@
 
     </Grid>
 
-    <!--<StackLayout Margin="20">
-        <Frame Padding="5">
+    <!--<StackLayout Margin="20" VerticalOptions="FillAndExpand"
+ HorizontalOptions="FillAndExpand">
+        <Frame Padding="5" >
             <StackLayout 
-                          Orientation="Horizontal"
+               
+                    
                          Spacing="15">
                 <Label Text="应用程序标识符:"
  
