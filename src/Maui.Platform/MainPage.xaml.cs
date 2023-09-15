@@ -19,8 +19,9 @@ namespace Maui.Platform
         private readonly IGeolocation _geolocation;
         private readonly IHapticFeedback _hapticFeedback;
         private readonly IVibration _vibration;
+        private readonly IMediaPicker _mediaPicker;
 
-        public MainPage(IAppInfo appInfo, ILauncher launcher = null, IMap map = null, IContacts contacts = null, IBattery battery = null, IDeviceDisplay deviceDisplay = null, IDeviceInfo deviceInfo = null, IAccelerometer accelerometer = null, IFlashlight flashlight = null, IGeocoding geocoding = null, IGeolocation geolocation = null, IHapticFeedback hapticFeedback = null, IVibration vibration = null)
+        public MainPage(IAppInfo appInfo, ILauncher launcher = null, IMap map = null, IContacts contacts = null, IBattery battery = null, IDeviceDisplay deviceDisplay = null, IDeviceInfo deviceInfo = null, IAccelerometer accelerometer = null, IFlashlight flashlight = null, IGeocoding geocoding = null, IGeolocation geolocation = null, IHapticFeedback hapticFeedback = null, IVibration vibration = null, IMediaPicker mediaPicker = null)
         {
             InitializeComponent();
             _appInfo = appInfo;
@@ -36,6 +37,7 @@ namespace Maui.Platform
             _geolocation = geolocation;
             _hapticFeedback = hapticFeedback;
             _vibration = vibration;
+            _mediaPicker = mediaPicker;
         }
 
 
@@ -1125,6 +1127,59 @@ namespace Maui.Platform
                 await DisplayAlert("错误", $"{ex.Message}", "OK");
             }
         }
+
+        /// <summary>
+        /// 照片和视频
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void MediaPicker_Clicked(object sender, EventArgs e)
+        {
+
+
+
+            var button = new Button()
+            {
+
+                Text = "选择照片",
+                Command = new Command(async () =>
+                {
+                    var fileResult = await _mediaPicker.PickPhotoAsync();
+
+                    ScrollView scrollView = new ScrollView();
+                    scrollView.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
+                    scrollView.HorizontalScrollBarVisibility = ScrollBarVisibility.Always;
+
+                    scrollView.Content = new VerticalStackLayout()
+                    {
+
+                       new Image
+                       {
+                           HeightRequest=100,
+                           WidthRequest=100,
+
+                           Source = fileResult.FullPath
+                       }
+                    };
+                    //scrollView.Content = new StackLayout()
+                    //{
+
+                    //    Children = {
+                    //    new Image
+                    //   {
+                    //       HeightRequest=200,
+                    //       Source = fileResult.FullPath
+                    //   }
+                    //    }
+                    //};
+
+
+                    await ModalHelper.ShowModalAsync(Navigation, "选择图片", scrollView);
+                })
+            };
+            await ModalHelper.ShowModalAsync(Navigation, "照片和视频的媒体选取器", button);
+        }
+
     }
 }
 

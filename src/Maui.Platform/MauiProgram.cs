@@ -38,6 +38,7 @@ namespace Maui.Platform
             builder.Services.AddSingleton<IGeolocation>(Geolocation.Default);
             builder.Services.AddSingleton<IHapticFeedback>(HapticFeedback.Default);
             builder.Services.AddSingleton<IVibration>(Vibration.Default);
+            builder.Services.AddSingleton<IMediaPicker>(MediaPicker.Default);
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
