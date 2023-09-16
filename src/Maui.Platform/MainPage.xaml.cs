@@ -20,8 +20,10 @@ namespace Maui.Platform
         private readonly IHapticFeedback _hapticFeedback;
         private readonly IVibration _vibration;
         private readonly IMediaPicker _mediaPicker;
+        private readonly IScreenshot _screenshot;
+        private readonly ITextToSpeech _textToSpeech;
 
-        public MainPage(IAppInfo appInfo, ILauncher launcher = null, IMap map = null, IContacts contacts = null, IBattery battery = null, IDeviceDisplay deviceDisplay = null, IDeviceInfo deviceInfo = null, IAccelerometer accelerometer = null, IFlashlight flashlight = null, IGeocoding geocoding = null, IGeolocation geolocation = null, IHapticFeedback hapticFeedback = null, IVibration vibration = null, IMediaPicker mediaPicker = null)
+        public MainPage(IAppInfo appInfo, ILauncher launcher = null, IMap map = null, IContacts contacts = null, IBattery battery = null, IDeviceDisplay deviceDisplay = null, IDeviceInfo deviceInfo = null, IAccelerometer accelerometer = null, IFlashlight flashlight = null, IGeocoding geocoding = null, IGeolocation geolocation = null, IHapticFeedback hapticFeedback = null, IVibration vibration = null, IMediaPicker mediaPicker = null, IScreenshot screenshot = null, ITextToSpeech textToSpeech = null)
         {
             InitializeComponent();
             _appInfo = appInfo;
@@ -38,6 +40,8 @@ namespace Maui.Platform
             _hapticFeedback = hapticFeedback;
             _vibration = vibration;
             _mediaPicker = mediaPicker;
+            _screenshot = screenshot;
+            _textToSpeech = textToSpeech;
         }
 
 
@@ -1140,7 +1144,7 @@ namespace Maui.Platform
 
             var button = new Button()
             {
-
+                Margin = new Thickness(0, 0, 0, 10),
                 Text = "选择照片",
                 Command = new Command(async () =>
                 {
@@ -1177,9 +1181,127 @@ namespace Maui.Platform
                     await ModalHelper.ShowModalAsync(Navigation, "选择图片", scrollView);
                 })
             };
-            await ModalHelper.ShowModalAsync(Navigation, "照片和视频的媒体选取器", button);
+
+            //打开相机以拍照
+            var buttion2 = new Button()
+            {
+
+                Text = "拍照",
+                Margin = new Thickness(0, 0, 0, 10),
+                Command = new Command(async () =>
+                {
+                    if (_mediaPicker.IsCaptureSupported)
+                    {
+                        FileResult photo = await _mediaPicker?.CapturePhotoAsync();
+                        if (photo is not null)
+                        {
+                            // save the file into local storage
+                            string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
+
+                            using Stream sourceStream = await photo.OpenReadAsync();
+                            using FileStream localFileStream = File.OpenWrite(localFilePath);
+
+                            await sourceStream.CopyToAsync(localFileStream);
+                        }
+                    }
+
+                })
+            };
+
+            var buttion3 = new Button()
+            {
+
+                Text = "选择视频",
+                Margin = new Thickness(0, 0, 0, 10),
+                Command = new Command(async () =>
+                {
+                    if (_mediaPicker.IsCaptureSupported)
+                    {
+                        FileResult photo = await _mediaPicker.PickPhotoAsync();
+
+                        if (photo != null)
+                        {
+                            // save the file into local storage
+                            string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
+
+                            using Stream sourceStream = await photo.OpenReadAsync();
+                            using FileStream localFileStream = File.OpenWrite(localFilePath);
+
+                            await sourceStream.CopyToAsync(localFileStream);
+                            //await DisplayAlert("提示", $"保存的地址为：{localFilePath}", "OK");
+
+                        }
+                    }
+
+                })
+            };
+            var buttion4 = new Button()
+            {
+
+                Text = "打开相机以拍摄视频",
+                Margin = new Thickness(0, 0, 0, 10),
+                Command = new Command(async () =>
+                {
+                    if (_mediaPicker.IsCaptureSupported)
+                    {
+                        FileResult video = await _mediaPicker.CaptureVideoAsync();
+
+                        if (video != null)
+                        {
+
+                            string localFilePath = Path.Combine(FileSystem.CacheDirectory, video.FileName);
+
+                            using Stream sourceStream = await video.OpenReadAsync();
+                            using FileStream localFileStream = File.OpenWrite(localFilePath);
+
+                            await sourceStream.CopyToAsync(localFileStream);
+                            //await DisplayAlert("提示", $"保存的地址为：{localFilePath}", "OK");
+                            Console.WriteLine($"拍摄视频地址为:{localFilePath}");
+                        }
+                    }
+
+                })
+            };
+            await ModalHelper.ShowModalAsync(Navigation, "照片和视频的媒体选取器", button, buttion2, buttion3, buttion4);
         }
 
+        /// <summary>
+        /// 屏幕快照
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Screenshot_Clicked(object sender, EventArgs e)
+        {
+
+
+
+            if (_screenshot.IsCaptureSupported)
+            {
+                IScreenshotResult screen = await _screenshot.CaptureAsync();
+
+                Stream stream = await screen.OpenReadAsync();
+
+                var imageSource = ImageSource.FromStream(() => stream);
+                Image image = new Image();
+
+                image.HeightRequest = 100;
+                image.Source = imageSource;
+                await ModalHelper.ShowModalAsync(Navigation, "捕获屏幕快照", image);
+
+            }
+
+
+        }
+
+        /// <summary>
+        /// 文本转语音
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void TextToSpeech_Clicked(object sender, EventArgs e)
+        {
+            await _textToSpeech.SpeakAsync("Hello World");
+        }
     }
 }
 

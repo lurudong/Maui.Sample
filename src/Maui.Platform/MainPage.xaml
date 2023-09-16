@@ -44,7 +44,8 @@
         <Button Grid.Row="8" Grid.Column="1"  Text="触觉反馈"     Clicked="Haptic_Clicked" ></Button>
         <Button Grid.Row="8" Grid.Column="1"  Text="振动"        Clicked="Vibration_Clicked" ></Button>
         <Button Grid.Row="1" Grid.Column="2"  Text="照片和视频" Clicked="MediaPicker_Clicked" ></Button>
-
+        <Button Grid.Row="2" Grid.Column="2"  Text="屏幕快照" Clicked="Screenshot_Clicked" ></Button>
+        <Button Grid.Row="3" Grid.Column="2"  Text="文本转语音" Clicked="TextToSpeech_Clicked" ></Button>
         <Button Grid.Row="2" Grid.Column="0"  Text="浏览器" Clicked="BrowserOpen_Clicked" ></Button>
 
         <Button Grid.Row="3" Grid.Column="0"  Text="启动器" Clicked="Launcher_Clicked"></Button>

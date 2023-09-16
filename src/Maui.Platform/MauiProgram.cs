@@ -39,6 +39,8 @@ namespace Maui.Platform
             builder.Services.AddSingleton<IHapticFeedback>(HapticFeedback.Default);
             builder.Services.AddSingleton<IVibration>(Vibration.Default);
             builder.Services.AddSingleton<IMediaPicker>(MediaPicker.Default);
+            builder.Services.AddSingleton<IScreenshot>(Screenshot.Default);
+            builder.Services.AddSingleton<ITextToSpeech>(TextToSpeech.Default);
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
