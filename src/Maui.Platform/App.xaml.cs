@@ -6,9 +6,11 @@
         {
             InitializeComponent();
 
-            AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
+            AppDomain.CurrentDomain.UnhandledException += async (sender, args) =>
             {
-                Exception ex = (Exception)args.ExceptionObject;
+                //Exception ex = (Exception)args.ExceptionObject;
+
+                //await Shell.Current.DisplayAlert("全局错误", $"{ex.Message}", "OK");
                 // 全局异常处理逻辑
             };
 

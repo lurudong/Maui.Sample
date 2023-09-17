@@ -41,6 +41,9 @@ namespace Maui.Platform
             builder.Services.AddSingleton<IMediaPicker>(MediaPicker.Default);
             builder.Services.AddSingleton<IScreenshot>(Screenshot.Default);
             builder.Services.AddSingleton<ITextToSpeech>(TextToSpeech.Default);
+            builder.Services.AddSingleton<IClipboard>(Clipboard.Default);
+            builder.Services.AddSingleton<IShare>(Share.Default);
+            builder.Services.AddSingleton<IFilePicker>(FilePicker.Default);
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

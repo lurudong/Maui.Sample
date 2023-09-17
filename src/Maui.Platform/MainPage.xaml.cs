@@ -22,8 +22,11 @@ namespace Maui.Platform
         private readonly IMediaPicker _mediaPicker;
         private readonly IScreenshot _screenshot;
         private readonly ITextToSpeech _textToSpeech;
+        private readonly IClipboard _clipboard;
+        private readonly IShare _share;
+        private readonly IFilePicker _filePicker;
 
-        public MainPage(IAppInfo appInfo, ILauncher launcher = null, IMap map = null, IContacts contacts = null, IBattery battery = null, IDeviceDisplay deviceDisplay = null, IDeviceInfo deviceInfo = null, IAccelerometer accelerometer = null, IFlashlight flashlight = null, IGeocoding geocoding = null, IGeolocation geolocation = null, IHapticFeedback hapticFeedback = null, IVibration vibration = null, IMediaPicker mediaPicker = null, IScreenshot screenshot = null, ITextToSpeech textToSpeech = null)
+        public MainPage(IAppInfo appInfo, ILauncher launcher = null, IMap map = null, IContacts contacts = null, IBattery battery = null, IDeviceDisplay deviceDisplay = null, IDeviceInfo deviceInfo = null, IAccelerometer accelerometer = null, IFlashlight flashlight = null, IGeocoding geocoding = null, IGeolocation geolocation = null, IHapticFeedback hapticFeedback = null, IVibration vibration = null, IMediaPicker mediaPicker = null, IScreenshot screenshot = null, ITextToSpeech textToSpeech = null, IClipboard clipboard = null, IShare share = null, IFilePicker filePicker = null)
         {
             InitializeComponent();
             _appInfo = appInfo;
@@ -42,6 +45,9 @@ namespace Maui.Platform
             _mediaPicker = mediaPicker;
             _screenshot = screenshot;
             _textToSpeech = textToSpeech;
+            _clipboard = clipboard;
+            _share = share;
+            _filePicker = filePicker;
         }
 
 
@@ -1300,7 +1306,223 @@ namespace Maui.Platform
         /// <param name="e"></param>
         private async void TextToSpeech_Clicked(object sender, EventArgs e)
         {
-            await _textToSpeech.SpeakAsync("Hello World");
+
+            //await _textToSpeech.SpeakAsync("Hello World");
+            var entry = new Entry
+            {
+                Margin = new Thickness(0, 0, 0, 10),
+                Placeholder = "请输入文本"
+            };
+
+            Button button = new Button
+            {
+
+                Margin = new Thickness(0, 0, 0, 10),
+                Text = "文本转语音",
+                Command = new Command(async () =>
+                {
+
+                    await _textToSpeech.SpeakAsync(string.IsNullOrEmpty(entry.Text) ? "Hello World" : entry.Text);
+                })
+            };
+
+            await ModalHelper.ShowModalAsync(Navigation, "文本转语音", entry, button);
+        }
+
+        /// <summary>
+        /// 单位转换器
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void UnitConverter_Clicked(object sender, EventArgs e)
+        {
+
+            var celsius = UnitConverters.FahrenheitToCelsius(32.0);
+            await DisplayAlert("单位转换器", $"华氏度转换为摄氏度{celsius}", "OK");
+
+        }
+
+        /// <summary>
+        /// 剪贴板
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Clipboard_Clicked(object sender, EventArgs e)
+        {
+
+            Button button = new Button
+            {
+                Margin = new Thickness(0, 0, 0, 10),
+                Text = "设置剪贴板",
+                //Command = new Command(async () =>
+                //{
+
+                //    await _clipboard.SetTextAsync("This text was highlighted in the UI.");
+                //})
+
+            };
+            button.Clicked += async (_, _) =>
+            {
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+
+                    await _clipboard.SetTextAsync("This text was highlighted in the UI.");
+                });
+
+            };
+            Button readButton = new Button
+            {
+                Margin = new Thickness(0, 0, 0, 10),
+                Text = "读剪贴板",
+                Command = new Command(() =>
+                {
+                    MainThread.BeginInvokeOnMainThread(async () =>
+                    {
+
+                        string text = "";
+                        text = await _clipboard.GetTextAsync();
+                        await _clipboard.SetTextAsync(null);
+                        //if (_clipboard.HasText)
+                        //{
+                        //    text = await _clipboard.GetTextAsync();
+                        //    await _clipboard.SetTextAsync(null);
+                        //}
+                        await DisplayAlert("提示", $"读剪贴板数据为：{text}", "OK");
+                    });
+
+                })
+
+            };
+            await ModalHelper.ShowModalAsync(Navigation, "剪贴板", button, readButton);
+
+        }
+
+        /// <summary>
+        /// 共享
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Share_Clicked(object sender, EventArgs e)
+        {
+
+            Button button = new Button
+            {
+                Margin = new Thickness(0, 0, 0, 10),
+                Text = "共享文本",
+                Command = new Command(() =>
+                {
+
+                    _share.RequestAsync(new ShareTextRequest()
+                    {
+
+                        Text = "你好",
+                        Title = "Share Text"
+                    });
+                })
+
+            };
+
+            Button shareFile = new Button
+            {
+                Margin = new Thickness(0, 0, 0, 10),
+                Text = "共享文件",
+                Command = new Command(async () =>
+                {
+
+                    string fn = "Attachment.txt";
+                    string file = Path.Combine(FileSystem.CacheDirectory, fn);
+
+                    File.WriteAllText(file, "Hello World");
+
+                    await _share.RequestAsync(new ShareFileRequest
+                    {
+                        Title = "Share text file",
+                        File = new ShareFile(file)
+                    });
+                })
+
+            };
+            Button shareMultipleFiles = new Button
+            {
+                Margin = new Thickness(0, 0, 0, 10),
+                Text = "共享多个文件",
+                Command = new Command(async () =>
+                {
+
+                    string file1 = Path.Combine(FileSystem.CacheDirectory, "Attachment1.txt");
+                    string file2 = Path.Combine(FileSystem.CacheDirectory, "Attachment2.txt");
+
+                    File.WriteAllText(file1, "Content 1");
+                    File.WriteAllText(file2, "Content 2");
+
+                    await _share.RequestAsync(new ShareMultipleFilesRequest
+                    {
+                        Title = "Share multiple files",
+                        Files = new List<ShareFile> { new ShareFile(file1), new ShareFile(file2) }
+                    });
+                })
+
+            };
+
+            await ModalHelper.ShowModalAsync(Navigation, "共享", button, shareFile, shareMultipleFiles);
+
+        }
+
+        /// <summary>
+        /// 文件选取器
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void FilePicker_Clicked(object sender, EventArgs e)
+        {
+            var customFileType = new FilePickerFileType(
+                new Dictionary<DevicePlatform, IEnumerable<string>>
+                {
+                    { DevicePlatform.iOS, new[] { "public.my.comic.extension" } }, // UTType values
+                    { DevicePlatform.Android, new[] { "application/comics" } }, // MIME type
+                    { DevicePlatform.WinUI, new[] { ".cbr", ".cbz" } }, // file extension
+                    { DevicePlatform.Tizen, new[] { "*/*" } },
+                    { DevicePlatform.macOS, new[] { "cbr", "cbz" } }, // UTType values
+                });
+
+            PickOptions options = new()
+            {
+                PickerTitle = "请选择一个文件",
+                FileTypes = customFileType,
+            };
+
+            await PickAndShow(options);
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        private async Task<FileResult> PickAndShow(PickOptions options)
+        {
+            try
+            {
+                var result = await _filePicker.PickAsync(options);
+                if (result != null)
+                {
+                    if (result.FileName.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) ||
+                        result.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase))
+                    {
+                        using var stream = await result.OpenReadAsync();
+                        var image = ImageSource.FromStream(() => stream);
+                    }
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                // The user canceled or something went wrong
+            }
+
+            return null;
         }
     }
 }
