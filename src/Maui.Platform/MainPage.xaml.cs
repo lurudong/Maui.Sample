@@ -25,8 +25,11 @@ namespace Maui.Platform
         private readonly IClipboard _clipboard;
         private readonly IShare _share;
         private readonly IFilePicker _filePicker;
+        private readonly IFileSystem _fileSystem;
+        private readonly IPreferences _preferences;
+        private readonly ISecureStorage _secureStorage;
 
-        public MainPage(IAppInfo appInfo, ILauncher launcher = null, IMap map = null, IContacts contacts = null, IBattery battery = null, IDeviceDisplay deviceDisplay = null, IDeviceInfo deviceInfo = null, IAccelerometer accelerometer = null, IFlashlight flashlight = null, IGeocoding geocoding = null, IGeolocation geolocation = null, IHapticFeedback hapticFeedback = null, IVibration vibration = null, IMediaPicker mediaPicker = null, IScreenshot screenshot = null, ITextToSpeech textToSpeech = null, IClipboard clipboard = null, IShare share = null, IFilePicker filePicker = null)
+        public MainPage(IAppInfo appInfo, ILauncher launcher = null, IMap map = null, IContacts contacts = null, IBattery battery = null, IDeviceDisplay deviceDisplay = null, IDeviceInfo deviceInfo = null, IAccelerometer accelerometer = null, IFlashlight flashlight = null, IGeocoding geocoding = null, IGeolocation geolocation = null, IHapticFeedback hapticFeedback = null, IVibration vibration = null, IMediaPicker mediaPicker = null, IScreenshot screenshot = null, ITextToSpeech textToSpeech = null, IClipboard clipboard = null, IShare share = null, IFilePicker filePicker = null, IFileSystem fileSystem = null, IPreferences preferences = null, ISecureStorage secureStorage = null)
         {
             InitializeComponent();
             _appInfo = appInfo;
@@ -48,6 +51,9 @@ namespace Maui.Platform
             _clipboard = clipboard;
             _share = share;
             _filePicker = filePicker;
+            _fileSystem = fileSystem;
+            _preferences = preferences;
+            _secureStorage = secureStorage;
         }
 
 
@@ -1524,8 +1530,105 @@ namespace Maui.Platform
 
             return null;
         }
+
+        /// <summary>
+        /// 文件系统帮助程序
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void FileSystem_Clicked(object sender, EventArgs e)
+        {
+            string cacheDir = _fileSystem.CacheDirectory;
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"缓存目录:{cacheDir}");
+            string mainDir = _fileSystem.AppDataDirectory;
+            sb.AppendLine($"应用数据目录:{mainDir}");
+            await DisplayAlert("文件系统帮助程序", $"{sb.ToString()}", "OK");
+        }
+
+        /// <summary>
+        /// 首选项
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Preferences_Clicked(object sender, EventArgs e)
+        {
+            // Set a string value:
+            _preferences.Set("first_name", "John");
+
+            // Set an numerical value:
+            _preferences.Set("age", 28);
+
+            // Set a boolean value:
+            _preferences.Set("has_pets", true);
+
+            string firstName = _preferences.Get("first_name", "Unknown");
+            int age = _preferences.Get("age", -1);
+            bool hasPets = _preferences.Get("has_pets", false);
+
+            await DisplayAlert("提示", $"值为:firstName={firstName},age={age},hasPets={hasPets}", "OK");
+        }
+
+        /// <summary>
+        /// 保护存储
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void SecureStorage_Clicked(object sender, EventArgs e)
+        {
+
+            Button button = new Button
+            {
+
+                Text = "写入值",
+                Command = new Command(async () =>
+                {
+                    await _secureStorage.SetAsync("oauth_token", "avbcvaaccccAAaaa");
+                    await DisplayAlert("提示", $"写入成功!!!", "OK");
+
+                }),
+                Margin = new Thickness(0, 0, 0, 10),
+            };
+
+            Button button1 = new Button
+            {
+
+                Text = "读取值",
+                Command = new Command(async () =>
+                {
+
+                    var text = await _secureStorage.GetAsync("oauth_token");
+                    if (text != null)
+                    {
+                        await DisplayAlert("提示", $"读取值为:{text}", "OK");
+                    }
+
+                }),
+                Margin = new Thickness(0, 0, 0, 10),
+            };
+
+            Button button2 = new Button
+            {
+
+                Text = "删除值",
+                Command = new Command(async () =>
+                {
+
+                    var success = _secureStorage.Remove("oauth_token");
+                    if (success)
+                    {
+                        await DisplayAlert("提示", $"删除成功", "OK");
+                    }
+
+                }),
+                Margin = new Thickness(0, 0, 0, 10),
+            };
+
+            await ModalHelper.ShowModalAsync(Navigation, "保护存储", button, button1, button2);
+        }
     }
 }
+
 
 
 

@@ -44,6 +44,9 @@ namespace Maui.Platform
             builder.Services.AddSingleton<IClipboard>(Clipboard.Default);
             builder.Services.AddSingleton<IShare>(Share.Default);
             builder.Services.AddSingleton<IFilePicker>(FilePicker.Default);
+            builder.Services.AddSingleton<IFileSystem>(FileSystem.Current);
+            builder.Services.AddSingleton<IPreferences>(Preferences.Default);
+            builder.Services.AddSingleton<ISecureStorage>(SecureStorage.Default);
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
