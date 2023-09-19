@@ -1,6 +1,11 @@
-﻿using System.Diagnostics;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
+using Maui.Platform.Model;
+using Maui.Platform.Seevices;
+using System.Diagnostics;
 using System.Text;
 
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Maui.Platform
 {
     public partial class MainPage : ContentPage
@@ -28,8 +33,9 @@ namespace Maui.Platform
         private readonly IFileSystem _fileSystem;
         private readonly IPreferences _preferences;
         private readonly ISecureStorage _secureStorage;
+        private readonly IUserService _userService;
 
-        public MainPage(IAppInfo appInfo, ILauncher launcher = null, IMap map = null, IContacts contacts = null, IBattery battery = null, IDeviceDisplay deviceDisplay = null, IDeviceInfo deviceInfo = null, IAccelerometer accelerometer = null, IFlashlight flashlight = null, IGeocoding geocoding = null, IGeolocation geolocation = null, IHapticFeedback hapticFeedback = null, IVibration vibration = null, IMediaPicker mediaPicker = null, IScreenshot screenshot = null, ITextToSpeech textToSpeech = null, IClipboard clipboard = null, IShare share = null, IFilePicker filePicker = null, IFileSystem fileSystem = null, IPreferences preferences = null, ISecureStorage secureStorage = null)
+        public MainPage(IAppInfo appInfo, ILauncher launcher = null, IMap map = null, IContacts contacts = null, IBattery battery = null, IDeviceDisplay deviceDisplay = null, IDeviceInfo deviceInfo = null, IAccelerometer accelerometer = null, IFlashlight flashlight = null, IGeocoding geocoding = null, IGeolocation geolocation = null, IHapticFeedback hapticFeedback = null, IVibration vibration = null, IMediaPicker mediaPicker = null, IScreenshot screenshot = null, ITextToSpeech textToSpeech = null, IClipboard clipboard = null, IShare share = null, IFilePicker filePicker = null, IFileSystem fileSystem = null, IPreferences preferences = null, ISecureStorage secureStorage = null, IUserService userService = null)
         {
             InitializeComponent();
             _appInfo = appInfo;
@@ -54,6 +60,7 @@ namespace Maui.Platform
             _fileSystem = fileSystem;
             _preferences = preferences;
             _secureStorage = secureStorage;
+            _userService = userService;
         }
 
 
@@ -1169,7 +1176,7 @@ namespace Maui.Platform
                     scrollView.Content = new VerticalStackLayout()
                     {
 
-                       new Image
+                       new Microsoft.Maui.Controls.Image
                        {
                            HeightRequest=100,
                            WidthRequest=100,
@@ -1294,7 +1301,7 @@ namespace Maui.Platform
                 Stream stream = await screen.OpenReadAsync();
 
                 var imageSource = ImageSource.FromStream(() => stream);
-                Image image = new Image();
+                var image = new Microsoft.Maui.Controls.Image();
 
                 image.HeightRequest = 100;
                 image.Source = imageSource;
@@ -1626,7 +1633,113 @@ namespace Maui.Platform
 
             await ModalHelper.ShowModalAsync(Navigation, "保护存储", button, button1, button2);
         }
+
+        public List<User> UserItems { get; set; } = new List<User>();
+
+        /// <summary>
+        /// 本地数据库
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void LocalData_Clicked(object sender, EventArgs e)
+        {
+
+            StackLayout layout = new StackLayout();
+            var entry = new Entry
+            {
+                Margin = new Thickness(0, 0, 0, 10),
+                Placeholder = "请输入名字",
+
+            };
+            var entry2 = new Entry
+            {
+                Margin = new Thickness(0, 0, 0, 10),
+                Placeholder = "请输入年龄"
+            };
+
+            Button button = new Button
+            {
+                Margin = new Thickness(0, 0, 0, 10),
+                Text = "添加"
+
+            };
+
+
+
+
+            var listView = new ListView
+            {
+                ItemsSource = await _userService.GetListUserAsync()
+            };
+            button.Command = new Command(async () =>
+            {
+                var userText = entry.Text;
+                var ageText = entry2.Text;
+
+                if (string.IsNullOrEmpty(userText))
+                {
+                    await Toast.Make("请输入用户名!!", ToastDuration.Long).Show();
+                    return;
+                }
+
+                if (!int.TryParse(ageText, out int result))
+                {
+                    await Toast.Make("年龄输入格式不对!!", ToastDuration.Long).Show();
+                    return;
+                }
+
+                await _userService.AddUserAsync(userText, result);
+                await Toast.Make("添加用户成功!!", ToastDuration.Long).Show();
+                entry.Text = "";
+                entry2.Text = "";
+                listView.ItemsSource = null;
+                listView.ItemsSource = await _userService.GetListUserAsync();
+            });
+
+
+
+
+            // 设置ListView的数据模板
+            listView.ItemTemplate = new DataTemplate(() =>
+            {
+
+
+                var grid = new Grid();
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star }); // 第一列占满剩余空间
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // 第二列自动宽度
+
+                var nameLabel = new Label
+                {
+                    FontAttributes = FontAttributes.Bold,
+                    VerticalOptions = LayoutOptions.Center,
+                };
+                nameLabel.SetBinding(Label.TextProperty, "Name");
+
+                var ageLabel = new Label
+                {
+                    FontAttributes = FontAttributes.Bold,
+                    VerticalOptions = LayoutOptions.Center,
+                };
+                ageLabel.SetBinding(Label.TextProperty, "Age");
+
+                Grid.SetColumn(nameLabel, 0);
+                Grid.SetColumn(ageLabel, 1);
+
+                grid.Children.Add(nameLabel);
+                grid.Children.Add(ageLabel);
+
+
+                return new ViewCell { View = grid };
+            });
+            layout.Add(entry);
+            layout.Add(entry2);
+            layout.Add(button);
+            layout.Add(listView);
+            await ModalHelper.ShowModalAsync(Navigation, "本地存储", layout);
+        }
     }
+
+
 }
 
 

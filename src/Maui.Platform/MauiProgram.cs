@@ -1,4 +1,7 @@
 ﻿using CommunityToolkit.Maui;
+using Maui.Platform.Help;
+using Maui.Platform.Model;
+using Maui.Platform.Seevices;
 using Microsoft.Extensions.Logging;
 using Communication = Microsoft.Maui.ApplicationModel.Communication;
 
@@ -47,6 +50,14 @@ namespace Maui.Platform
             builder.Services.AddSingleton<IFileSystem>(FileSystem.Current);
             builder.Services.AddSingleton<IPreferences>(Preferences.Default);
             builder.Services.AddSingleton<ISecureStorage>(SecureStorage.Default);
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddSingleton<IDatabaseStorage>(_ =>
+             {
+
+                 var db = new DatabaseImp(new SQLite.SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags));
+                 db.Database.CreateTableAsync<User>().GetAwaiter();
+                 return db;
+             });
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
