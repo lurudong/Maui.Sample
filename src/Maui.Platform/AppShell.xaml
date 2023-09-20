@@ -5,10 +5,30 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Maui.Platform"
     Shell.FlyoutBehavior="Disabled">
-
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+Title="主页"
+ContentTemplate="{DataTemplate local:MainPage}"
+Route="MainPage" />
+    <!--<TabBar>
+        <Tab>
+            <ShellContent
+Title="主页"
+ContentTemplate="{DataTemplate local:MainPage}"
+Route="MainPage" />
+        </Tab>
+        <Tab>
+            <ShellContent
+Title="主页1"
+ContentTemplate="{DataTemplate local:MainPage}"
+Route="MainPage1" />
+        </Tab>
+        <Tab>
+            <ShellContent
+Title="主页2"
+ContentTemplate="{DataTemplate local:MainPage}"
+Route="MainPage2" />
+        </Tab>
+    </TabBar>-->
+
 
 </Shell>

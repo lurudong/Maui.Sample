@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Maui;
-using Maui.Platform.Help;
+using CommunityToolkit.Maui.Markup;
 using Maui.Platform.Model;
 using Maui.Platform.Seevices;
 using Microsoft.Extensions.Logging;
+using UraniumUI;
 using Communication = Microsoft.Maui.ApplicationModel.Communication;
+using Constants = Maui.Platform.Help.Constants;
 
 namespace Maui.Platform
 {
@@ -14,8 +16,10 @@ namespace Maui.Platform
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                 .UseMauiCommunityToolkit()
-                  .ConfigureEssentials(essentials =>
+                .UseMauiCommunityToolkit()
+                .UseMauiCommunityToolkitMarkup()
+                 .UseUraniumUI()
+                 .ConfigureEssentials(essentials =>
                   {
                       essentials.UseMapServiceToken("Izj5JILe1xYXL0hTHW26~8oiFE11ZYPqSyuxSbUcy0w~AgBWKjMLiO3UjxZv2nck0nYUhmXSv_VE59N6_rLQmO0M_Owr_snfN7cDsbrQGNtI");
                   })

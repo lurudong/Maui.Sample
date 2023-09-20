@@ -4,7 +4,7 @@
              x:Class="Maui.Platform.MainPage">
 
 
-    <Grid Padding="5" ColumnSpacing="5"  RowSpacing="5">
+    <Grid Padding="5" ColumnSpacing="5"  RowSpacing="5" >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" ></RowDefinition>
 
