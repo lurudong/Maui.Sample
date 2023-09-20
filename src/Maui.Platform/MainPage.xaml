@@ -57,6 +57,12 @@
         <Button Grid.Row="2" Grid.Column="2"  Text="屏幕快照" Clicked="Screenshot_Clicked" ></Button>
         <Button Grid.Row="3" Grid.Column="2"  Text="文本转语音" Clicked="TextToSpeech_Clicked" ></Button>
         <Button Grid.Row="4" Grid.Column="2"  Text="单位转换器" Clicked="UnitConverter_Clicked" ></Button>
+        <Button Grid.Row="6" Grid.Column="2" Text="联系人"></Button>
+        <Button Grid.Row="7" Grid.Column="2" Text="电子邮件"></Button>
+        <Button Grid.Row="8" Grid.Column="2" Text="网络"></Button>
+        <Button Grid.Row="9" Grid.Column="2" Text="电话拨号"></Button>
+        <Button Grid.Row="10" Grid.Column="2" Text="SMS"></Button>
+        <Button Grid.Row="11" Grid.Column="2" Text="Web验证器"></Button>
         <Button Grid.Row="2" Grid.Column="0"  Text="浏览器" Clicked="BrowserOpen_Clicked" ></Button>
 
         <Button Grid.Row="3" Grid.Column="0"  Text="启动器" Clicked="Launcher_Clicked"></Button>
