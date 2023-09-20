@@ -1688,6 +1688,16 @@ namespace Maui.Platform
                     return;
                 }
 
+                if (await _userService.ExistAsync(o => o.Name == userText))
+                {
+
+
+                    await Toast.Make("用户名已存在，请重新输入!!", ToastDuration.Long).Show();
+                    return;
+                }
+
+
+
                 await _userService.AddUserAsync(userText, result);
                 await Toast.Make("添加用户成功!!", ToastDuration.Long).Show();
                 entry.Text = "";
