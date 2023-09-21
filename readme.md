@@ -114,3 +114,17 @@ db.CreateTable<Stock>();
 最重要的是，根据应用程序的架构和可维护性需求来做出明智的选择。
 
 ```
+
+基础
+使用 TAP 时，应遵循以下一般准则：
+
+- 了解由 `TaskStatus` 枚举表示的任务生命周期。 有关详细信息，请参阅 [TaskStatus 的含义](https://devblogs.microsoft.com/pfxteam/the-meaning-of-taskstatus/)和[任务状态](https://learn.microsoft.com/zh-cn/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap#task-status)。
+- 使用 `Task.WhenAll` 方法异步地等待多个异步操作完成，而不是使用 `await` 单独等待一系列异步操作。 有关详细信息，请参阅 [Task.WhenAll](https://learn.microsoft.com/zh-cn/dotnet/standard/asynchronous-programming-patterns/consuming-the-task-based-asynchronous-pattern#taskwhenall)。
+- 使用 `Task.WhenAny` 方法异步地等待多个异步操作中的一个操作完成。 有关详细信息，请参阅 [Task.WhenAny](https://learn.microsoft.com/zh-cn/dotnet/standard/asynchronous-programming-patterns/consuming-the-task-based-asynchronous-pattern#taskwhenall)。
+- 使用 `Task.Delay` 方法生成在指定时间后完成的 `Task` 对象。 对于轮询数据和将用户输入的处理延迟预定时间之类的场景，这非常有用。 有关详细信息，请参阅 [Task.Delay](https://learn.microsoft.com/zh-cn/dotnet/standard/asynchronous-programming-patterns/consuming-the-task-based-asynchronous-pattern#taskdelay)。
+- 使用 `Task.Run` 方法对线程池执行密集型同步 CPU 操作。 此方法是 `TaskFactory.StartNew` 方法的快捷方式，其中设置的参数最佳。 有关详细信息，请参阅 [Task.Run](https://learn.microsoft.com/zh-cn/dotnet/standard/asynchronous-programming-patterns/consuming-the-task-based-asynchronous-pattern#taskrun)。
+- 避免尝试创建异步构造函数。 请改用生命周期事件或单独的初始化逻辑，以使用 `await` 正确处理任何初始化。 有关详细信息，请参阅 blog.stephencleary.com 上的 [Async 构造函数](https://blog.stephencleary.com/2013/01/async-oop-2-constructors.html)。
+- 使用延迟任务模式，以避免在应用启动期间等待异步操作完成。 有关详细信息，请参阅 [AsyncLazy](https://devblogs.microsoft.com/pfxteam/asynclazyt/)。
+- 通过创建 `TaskCompletionSource<T>` 对象，为不使用 TAP 的现有异步操作创建任务包装器。 这些对象获得 `Task` 可编程性的优点，并使你能够控制关联 `Task` 的生存期和完成。 有关详细信息，请参阅 [TaskCompletionSource 的性质](https://devblogs.microsoft.com/pfxteam/the-nature-of-taskcompletionsourcetresult/)。
+- 当无需处理异步操作的结果时，返回 `Task` 对象，而不是返回等待的 `Task` 对象。 由于执行的上下文切换较少，因此性能更高。
+- 在数据可用时处理数据，或在你有多个必须以异步方式彼此通信的操作等场景下，使用任务并行库 (TPL) 数据流库。 有关详细信息，请参阅[数据流（任务并行库）](https://learn.microsoft.com/zh-cn/dotnet/standard/parallel-programming/dataflow-task-parallel-library)。
