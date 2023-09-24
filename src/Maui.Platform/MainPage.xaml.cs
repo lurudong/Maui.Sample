@@ -1169,20 +1169,11 @@ namespace Maui.Platform
                 {
                     var fileResult = await _mediaPicker.PickPhotoAsync();
 
-                    ScrollView scrollView = new ScrollView();
-                    scrollView.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
-                    scrollView.HorizontalScrollBarVisibility = ScrollBarVisibility.Always;
-
-                    scrollView.Content = new VerticalStackLayout()
+                    var image = new Microsoft.Maui.Controls.Image
                     {
 
-                       new Microsoft.Maui.Controls.Image
-                       {
-                           HeightRequest=100,
-                           WidthRequest=100,
-
-                           Source = fileResult.FullPath
-                       }
+                        Aspect = Aspect.AspectFill,
+                        Source = fileResult.FullPath
                     };
                     //scrollView.Content = new StackLayout()
                     //{
@@ -1197,7 +1188,7 @@ namespace Maui.Platform
                     //};
 
 
-                    await ModalHelper.ShowModalAsync(Navigation, "选择图片", scrollView);
+                    await ModalHelper.ShowScrollViewModalAsync(Navigation, "选择图片", image);
                 })
             };
 
@@ -1215,12 +1206,27 @@ namespace Maui.Platform
                         if (photo is not null)
                         {
                             // save the file into local storage
-                            string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
+                            //string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
 
-                            using Stream sourceStream = await photo.OpenReadAsync();
-                            using FileStream localFileStream = File.OpenWrite(localFilePath);
+                            //Stream sourceStream = await photo.OpenReadAsync();
+                            //FileStream localFileStream = File.OpenWrite(localFilePath);
 
-                            await sourceStream.CopyToAsync(localFileStream);
+                            //await sourceStream.CopyToAsync(localFileStream);
+
+                            MainThread.BeginInvokeOnMainThread(async () =>
+                            {
+                                var image = new Microsoft.Maui.Controls.Image
+                                {
+
+                                    Aspect = Aspect.AspectFill,
+                                    Source = ImageSource.FromStream(async (s) => await photo.OpenReadAsync())
+                                };
+
+
+
+                                await ModalHelper.ShowScrollViewModalAsync(Navigation, "选择图片", image);
+                            });
+
                         }
                     }
 
@@ -1303,9 +1309,8 @@ namespace Maui.Platform
                 var imageSource = ImageSource.FromStream(() => stream);
                 var image = new Microsoft.Maui.Controls.Image();
 
-                image.HeightRequest = 100;
                 image.Source = imageSource;
-                await ModalHelper.ShowModalAsync(Navigation, "捕获屏幕快照", image);
+                await ModalHelper.ShowScrollViewModalAsync(Navigation, "捕获屏幕快照", image);
 
             }
 

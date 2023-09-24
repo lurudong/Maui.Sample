@@ -4,82 +4,84 @@
              x:Class="Maui.Platform.MainPage">
 
 
-    <Grid Padding="5" ColumnSpacing="5"  RowSpacing="5" >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" ></RowDefinition>
 
-            <RowDefinition Height="Auto"></RowDefinition>
+    <ScrollView>
+        <Grid Padding="5" ColumnSpacing="5"  RowSpacing="5" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" ></RowDefinition>
 
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-        </Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
 
-        <Grid.ColumnDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
 
-            <ColumnDefinition ></ColumnDefinition>
-            <ColumnDefinition ></ColumnDefinition>
-            <ColumnDefinition ></ColumnDefinition>
-            <ColumnDefinition ></ColumnDefinition>
+            <Grid.ColumnDefinitions>
 
-        </Grid.ColumnDefinitions>
+                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
 
-        <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="0" TextColor="Green" Text="应用操作" FontSize="15"  FontAttributes="Bold" />
-        <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="1" TextColor="Green" Text="设备功能" FontSize="15" FontAttributes="Bold"/>
-        <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="2" TextColor="Green" Text="媒体" FontSize="15" FontAttributes="Bold"/>
-        <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="3" TextColor="Green" Text="共享API" FontSize="15" FontAttributes="Bold"/>
-        <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="3" Grid.Column="3" TextColor="Green" Text="存储API" FontSize="15" FontAttributes="Bold"/>
-        <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="5" Grid.Column="2" TextColor="Green" Text="通信API" FontSize="15" FontAttributes="Bold"/>
-        <Button  Grid.Row="1" Grid.Column="0"  Text="应用信息" Clicked="Button_AppInfo"></Button>
+            </Grid.ColumnDefinitions>
 
-        <Button Grid.Row="1"  Grid.Column="1"  Text="电池"  Clicked="Battery_Clicked" ></Button>
-        <Button Grid.Row="2" Grid.Column="1"  Text="设备显示信息"  Clicked="DeviceDisplay_Clicked" ></Button>
-        <Button Grid.Row="3" Grid.Column="1"  Text="设备信息"  Clicked="DeviceInfo_Clicked" ></Button>
-        <Button Grid.Row="4" Grid.Column="1"  Text="传感器"  Clicked="Accelerometer_Clicked" ></Button>
-        <Button Grid.Row="5" Grid.Column="1"  Text="手电筒"  Clicked="Flashlight_Clicked" ></Button>
-        <Button Grid.Row="6" Grid.Column="1"  Text="地理编码信息"   Clicked="Geocoding_Clicked" ></Button>
-        <Button Grid.Row="7" Grid.Column="1"  Text="地理位置信息"  Clicked="Geolocation_Clicked" ></Button>
-        <Button Grid.Row="8" Grid.Column="1"  Text="触觉反馈"     Clicked="Haptic_Clicked" ></Button>
-        <Button Grid.Row="9" Grid.Column="1"  Text="振动"        Clicked="Vibration_Clicked" ></Button>
-        
-        <Button Grid.Row="1" Grid.Column="2"  Text="照片和视频" Clicked="MediaPicker_Clicked" ></Button>
-        <Button Grid.Row="2" Grid.Column="2"  Text="屏幕快照" Clicked="Screenshot_Clicked" ></Button>
-        <Button Grid.Row="3" Grid.Column="2"  Text="文本转语音" Clicked="TextToSpeech_Clicked" ></Button>
-        <Button Grid.Row="4" Grid.Column="2"  Text="单位转换器" Clicked="UnitConverter_Clicked" ></Button>
-        <Button Grid.Row="6" Grid.Column="2" Text="联系人"></Button>
-        <Button Grid.Row="7" Grid.Column="2" Text="电子邮件"></Button>
-        <Button Grid.Row="8" Grid.Column="2" Text="网络"></Button>
-        <Button Grid.Row="9" Grid.Column="2" Text="电话拨号"></Button>
-        <Button Grid.Row="10" Grid.Column="2" Text="SMS"></Button>
-        <Button Grid.Row="11" Grid.Column="2" Text="Web验证器"></Button>
-        <Button Grid.Row="2" Grid.Column="0"  Text="浏览器" Clicked="BrowserOpen_Clicked" ></Button>
+            <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="0" TextColor="Green" Text="应用操作" FontSize="15"  FontAttributes="Bold" />
+            <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="1" TextColor="Green" Text="设备功能" FontSize="15" FontAttributes="Bold"/>
+            <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="2" TextColor="Green" Text="媒体" FontSize="15" FontAttributes="Bold"/>
+            <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="3" TextColor="Green" Text="共享API" FontSize="15" FontAttributes="Bold"/>
+            <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="3" Grid.Column="3" TextColor="Green" Text="存储API" FontSize="15" FontAttributes="Bold"/>
+            <Label VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" Grid.Row="5" Grid.Column="2" TextColor="Green" Text="通信API" FontSize="15" FontAttributes="Bold"/>
+            <Button  Grid.Row="1" Grid.Column="0"  Text="应用信息" Clicked="Button_AppInfo"></Button>
 
-        <Button Grid.Row="3" Grid.Column="0"  Text="启动器" Clicked="Launcher_Clicked"></Button>
+            <Button Grid.Row="1"  Grid.Column="1"  Text="电池"  Clicked="Battery_Clicked" ></Button>
+            <Button Grid.Row="2" Grid.Column="1"  Text="设备显示信息"  Clicked="DeviceDisplay_Clicked" ></Button>
+            <Button Grid.Row="3" Grid.Column="1"  Text="设备信息"  Clicked="DeviceInfo_Clicked" ></Button>
+            <Button Grid.Row="4" Grid.Column="1"  Text="传感器"  Clicked="Accelerometer_Clicked" ></Button>
+            <Button Grid.Row="5" Grid.Column="1"  Text="手电筒"  Clicked="Flashlight_Clicked" ></Button>
+            <Button Grid.Row="6" Grid.Column="1"  Text="地理编码信息"   Clicked="Geocoding_Clicked" ></Button>
+            <Button Grid.Row="7" Grid.Column="1"  Text="地理位置信息"  Clicked="Geolocation_Clicked" ></Button>
+            <Button Grid.Row="8" Grid.Column="1"  Text="触觉反馈"     Clicked="Haptic_Clicked" ></Button>
+            <Button Grid.Row="9" Grid.Column="1"  Text="振动"        Clicked="Vibration_Clicked" ></Button>
 
-        <Button Grid.Row="4"  Grid.Column="0"  Text="地图与导航" Clicked="Map_Clicked"></Button>
+            <Button Grid.Row="1" Grid.Column="2"  Text="照片和视频" Clicked="MediaPicker_Clicked" ></Button>
+            <Button Grid.Row="2" Grid.Column="2"  Text="屏幕快照" Clicked="Screenshot_Clicked" ></Button>
+            <Button Grid.Row="3" Grid.Column="2"  Text="文本转语音" Clicked="TextToSpeech_Clicked" ></Button>
+            <Button Grid.Row="4" Grid.Column="2"  Text="单位转换器" Clicked="UnitConverter_Clicked" ></Button>
+            <Button Grid.Row="6" Grid.Column="2" Text="联系人"></Button>
+            <Button Grid.Row="7" Grid.Column="2" Text="电子邮件"></Button>
+            <Button Grid.Row="8" Grid.Column="2" Text="网络"></Button>
+            <Button Grid.Row="9" Grid.Column="2" Text="电话拨号"></Button>
+            <Button Grid.Row="10" Grid.Column="2" Text="SMS"></Button>
+            <Button Grid.Row="11" Grid.Column="2" Text="Web验证器"></Button>
+            <Button Grid.Row="2" Grid.Column="0"  Text="浏览器" Clicked="BrowserOpen_Clicked" ></Button>
 
-        <Button Grid.Row="5"  Grid.Column="0"  Text="权限" Clicked="Permissions_Clicked"></Button>
+            <Button Grid.Row="3" Grid.Column="0"  Text="启动器" Clicked="Launcher_Clicked"></Button>
 
-        <Button Grid.Row="1"  Grid.Column="3"  Text="剪贴板" Clicked="Clipboard_Clicked"></Button>
-        <Button Grid.Row="2"  Grid.Column="3"  Text="共享" Clicked="Share_Clicked"></Button>
-        <Button Grid.Row="4"  Grid.Column="3"  Text="文件选取器" Clicked="FilePicker_Clicked"></Button>
-        <Button Grid.Row="5"  Grid.Column="3"  Text="文件系统帮助程序" Clicked="FileSystem_Clicked"></Button>
-        <Button Grid.Row="6"  Grid.Column="3"  Text="首选项" Clicked="Preferences_Clicked"></Button>
-        <Button Grid.Row="7"  Grid.Column="3"  Text="保护存储" Clicked="SecureStorage_Clicked"></Button>
-        <Button SemanticProperties.Hint="aa" Grid.Row="8" Grid.Column="3" Text="本地数据" Clicked="LocalData_Clicked"></Button>
-    </Grid>
+            <Button Grid.Row="4"  Grid.Column="0"  Text="地图与导航" Clicked="Map_Clicked"></Button>
 
+            <Button Grid.Row="5"  Grid.Column="0"  Text="权限" Clicked="Permissions_Clicked"></Button>
+
+            <Button Grid.Row="1"  Grid.Column="3"  Text="剪贴板" Clicked="Clipboard_Clicked"></Button>
+            <Button Grid.Row="2"  Grid.Column="3"  Text="共享" Clicked="Share_Clicked"></Button>
+            <Button Grid.Row="4"  Grid.Column="3"  Text="文件选取器" Clicked="FilePicker_Clicked"></Button>
+            <Button Grid.Row="5"  Grid.Column="3"  Text="文件系统帮助程序" Clicked="FileSystem_Clicked"></Button>
+            <Button Grid.Row="6"  Grid.Column="3"  Text="首选项" Clicked="Preferences_Clicked"></Button>
+            <Button Grid.Row="7"  Grid.Column="3"  Text="保护存储" Clicked="SecureStorage_Clicked"></Button>
+            <Button  Grid.Row="8" Grid.Column="3" Text="本地数据" Clicked="LocalData_Clicked"></Button>
+        </Grid>
+    </ScrollView>
     <!--<StackLayout Margin="20" VerticalOptions="FillAndExpand"
  HorizontalOptions="FillAndExpand">
         <Frame Padding="5" >
