@@ -17,6 +17,7 @@ namespace Maui.Platform
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseMauiCommunityToolkitMediaElement()
                 .UseMauiCommunityToolkitMarkup()
                  .UseUraniumUI()
                  .ConfigureEssentials(essentials =>
@@ -28,7 +29,12 @@ namespace Maui.Platform
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
-
+            builder.UseMauiCommunityToolkit(options =>
+            {
+                options.SetShouldSuppressExceptionsInConverters(false);
+                options.SetShouldSuppressExceptionsInBehaviors(false);
+                options.SetShouldSuppressExceptionsInAnimations(false);
+            });
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<IAppInfo>(AppInfo.Current);
             builder.Services.AddSingleton<ILauncher>(Launcher.Default);

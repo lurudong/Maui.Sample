@@ -81,6 +81,7 @@
             <Button Grid.Row="7"  Grid.Column="3"  Text="保护存储" Clicked="SecureStorage_Clicked"></Button>
             <Button  Grid.Row="8" Grid.Column="3" Text="本地数据" Clicked="LocalData_Clicked"></Button>
         </Grid>
+ 
     </ScrollView>
     <!--<StackLayout Margin="20" VerticalOptions="FillAndExpand"
  HorizontalOptions="FillAndExpand">

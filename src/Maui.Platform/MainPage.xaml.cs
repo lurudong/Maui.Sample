@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Views;
 using Maui.Platform.Model;
 using Maui.Platform.Seevices;
 using System.Diagnostics;
@@ -10,6 +11,7 @@ namespace Maui.Platform
 {
     public partial class MainPage : ContentPage
     {
+
 
         private readonly IAppInfo _appInfo;
         private readonly ILauncher _launcher;
@@ -67,196 +69,197 @@ namespace Maui.Platform
 
         private async void Button_AppInfo(object sender, EventArgs e)
         {
-            string name = _appInfo.Name;
-            string package = _appInfo.PackageName; //com.microsoft.myapp
-            string version = _appInfo.VersionString;
-            string build = _appInfo.BuildString;
 
-            Frame frame1 = new Frame
-            {
-                Padding = new Thickness(5),
-                BorderColor = Colors.Black,
-                Content = new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal,
-                    Spacing = 15,
-                    Children =
-                {
-                   new Label{
-                       Text="程序名称:",
-                       TextColor = Colors.Red
+            //string name = _appInfo.Name;
+            //string package = _appInfo.PackageName; //com.microsoft.myapp
+            //string version = _appInfo.VersionString;
+            //string build = _appInfo.BuildString;
 
-                   },
-                       new Label{
-                       Text = name
-                   }
-                }
-                }
-            };
+            //Frame frame1 = new Frame
+            //{
+            //    Padding = new Thickness(5),
+            //    BorderColor = Colors.Black,
+            //    Content = new StackLayout
+            //    {
+            //        Orientation = StackOrientation.Horizontal,
+            //        Spacing = 15,
+            //        Children =
+            //    {
+            //       new Label{
+            //           Text="程序名称:",
+            //           TextColor = Colors.Red
 
-            Frame frame2 = new Frame
-            {
-                Padding = new Thickness(5),
-                BorderColor = Colors.Black,
-                Content = new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal,
-                    Spacing = 15,
-                    Children =
-                {
-                   new Label{
-                       Text="程序标识符:", //例如 com.microsoft.myapp
-                       TextColor = Colors.Red
+            //       },
+            //           new Label{
+            //           Text = name
+            //       }
+            //    }
+            //    }
+            //};
 
-                   },
-                       new Label{
-                       Text = package
+            //Frame frame2 = new Frame
+            //{
+            //    Padding = new Thickness(5),
+            //    BorderColor = Colors.Black,
+            //    Content = new StackLayout
+            //    {
+            //        Orientation = StackOrientation.Horizontal,
+            //        Spacing = 15,
+            //        Children =
+            //    {
+            //       new Label{
+            //           Text="程序标识符:", //例如 com.microsoft.myapp
+            //           TextColor = Colors.Red
 
-                   }
-                }
-                }
-            };
+            //       },
+            //           new Label{
+            //           Text = package
 
-            Frame frame3 = new Frame
-            {
-                Padding = new Thickness(5),
-                BorderColor = Colors.Black,
-                Content = new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal,
-                    Spacing = 15,
-                    Children =
-                {
-                   new Label{
-                       Text="程序版本:", //例如 com.microsoft.myapp
-                       TextColor = Colors.Red
+            //       }
+            //    }
+            //    }
+            //};
 
-                   },
-                       new Label{
-                       Text = version
+            //Frame frame3 = new Frame
+            //{
+            //    Padding = new Thickness(5),
+            //    BorderColor = Colors.Black,
+            //    Content = new StackLayout
+            //    {
+            //        Orientation = StackOrientation.Horizontal,
+            //        Spacing = 15,
+            //        Children =
+            //    {
+            //       new Label{
+            //           Text="程序版本:", //例如 com.microsoft.myapp
+            //           TextColor = Colors.Red
 
-                   }
-                }
-                }
-            };
+            //       },
+            //           new Label{
+            //           Text = version
 
-
-            Frame frame4 = new Frame
-            {
-                Padding = new Thickness(5),
-                BorderColor = Colors.Black,
-                Content = new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal,
-                    Spacing = 15,
-                    Children =
-                {
-                   new Label{
-                       Text="内部版本号:", //例如 com.microsoft.myapp
-                       TextColor = Colors.Red
-
-                   },
-                       new Label{
-                       Text = build
-
-                   }
-                }
-                }
-            };
+            //       }
+            //    }
+            //    }
+            //};
 
 
-            Frame frame5 = new Frame
-            {
-                Padding = new Thickness(5),
-                BorderColor = Colors.Black,
-                Content = new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal,
-                    Spacing = 15,
-                    Children =
-                {
-                   new Label{
-                       Text="当前主题:",
-                       TextColor = Colors.Red
+            //Frame frame4 = new Frame
+            //{
+            //    Padding = new Thickness(5),
+            //    BorderColor = Colors.Black,
+            //    Content = new StackLayout
+            //    {
+            //        Orientation = StackOrientation.Horizontal,
+            //        Spacing = 15,
+            //        Children =
+            //    {
+            //       new Label{
+            //           Text="内部版本号:", //例如 com.microsoft.myapp
+            //           TextColor = Colors.Red
 
-                   },
-                       new Label{
-                       Text = _appInfo.RequestedTheme.ToString()
+            //       },
+            //           new Label{
+            //           Text = build
 
-                   }
-                }
-                }
-            };
-
-            Frame frame6 = new Frame
-            {
-                Padding = new Thickness(5),
-                BorderColor = Colors.Black,
-                Content = new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal,
-                    Spacing = 15,
-                    Children =
-                {
-                   new Label{
-                       Text="布局方向:",
-                       TextColor = Colors.Red
-
-                   },
-                       new Label{
-                       Text = _appInfo.RequestedLayoutDirection.ToString()
-
-                   }
-                }
-                }
-            };
+            //       }
+            //    }
+            //    }
+            //};
 
 
-            Frame frame7 = new Frame
-            {
-                Padding = new Thickness(5),
-                BorderColor = Colors.Black,
-                Content = new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal,
-                    Spacing = 15,
-                    Children =
-                {
-                   new Label{
-                       Text="打包模型:",
-                       TextColor = Colors.Red
+            //Frame frame5 = new Frame
+            //{
+            //    Padding = new Thickness(5),
+            //    BorderColor = Colors.Black,
+            //    Content = new StackLayout
+            //    {
+            //        Orientation = StackOrientation.Horizontal,
+            //        Spacing = 15,
+            //        Children =
+            //    {
+            //       new Label{
+            //           Text="当前主题:",
+            //           TextColor = Colors.Red
 
-                   },
-                      new Label{
-                       Text = _appInfo.PackagingModel==AppPackagingModel.Packaged ? "打包":"未打包"
+            //       },
+            //           new Label{
+            //           Text = _appInfo.RequestedTheme.ToString()
 
-                   }
-                }
-                }
-            };
+            //       }
+            //    }
+            //    }
+            //};
+
+            //Frame frame6 = new Frame
+            //{
+            //    Padding = new Thickness(5),
+            //    BorderColor = Colors.Black,
+            //    Content = new StackLayout
+            //    {
+            //        Orientation = StackOrientation.Horizontal,
+            //        Spacing = 15,
+            //        Children =
+            //    {
+            //       new Label{
+            //           Text="布局方向:",
+            //           TextColor = Colors.Red
+
+            //       },
+            //           new Label{
+            //           Text = _appInfo.RequestedLayoutDirection.ToString()
+
+            //       }
+            //    }
+            //    }
+            //};
 
 
-            var openButton = new Button
-            {
-                Text = "显示应用设置",
-                Margin = new Thickness(0, 0, 0, 10),
+            //Frame frame7 = new Frame
+            //{
+            //    Padding = new Thickness(5),
+            //    BorderColor = Colors.Black,
+            //    Content = new StackLayout
+            //    {
+            //        Orientation = StackOrientation.Horizontal,
+            //        Spacing = 15,
+            //        Children =
+            //    {
+            //       new Label{
+            //           Text="打包模型:",
+            //           TextColor = Colors.Red
+
+            //       },
+            //          new Label{
+            //           Text = _appInfo.PackagingModel==AppPackagingModel.Packaged ? "打包":"未打包"
+
+            //       }
+            //    }
+            //    }
+            //};
 
 
-            };
-            openButton.Clicked += (sender, e) =>
-            {
-                _appInfo.ShowSettingsUI();
-            };
-            StackLayout stackLayout = new StackLayout { Margin = new Thickness(20), Spacing = 6 };
-            stackLayout.Add(frame1);
-            stackLayout.Add(frame2);
-            stackLayout.Add(frame3);
-            stackLayout.Add(frame4);
-            stackLayout.Add(frame5);
-            stackLayout.Add(frame6);
-            stackLayout.Add(frame7);
+            //var openButton = new Button
+            //{
+            //    Text = "显示应用设置",
+            //    Margin = new Thickness(0, 0, 0, 10),
 
-            await ModalHelper.ShowModalAsync(Navigation, "应用信息", stackLayout, openButton);
+
+            //};
+            //openButton.Clicked += (sender, e) =>
+            //{
+            //    _appInfo.ShowSettingsUI();
+            //};
+            //StackLayout stackLayout = new StackLayout { Margin = new Thickness(20), Spacing = 6 };
+            //stackLayout.Add(frame1);
+            //stackLayout.Add(frame2);
+            //stackLayout.Add(frame3);
+            //stackLayout.Add(frame4);
+            //stackLayout.Add(frame5);
+            //stackLayout.Add(frame6);
+            //stackLayout.Add(frame7);
+
+            //await ModalHelper.ShowModalAsync(Navigation, "应用信息", stackLayout, openButton);
 
         }
 
@@ -1159,7 +1162,11 @@ namespace Maui.Platform
         private async void MediaPicker_Clicked(object sender, EventArgs e)
         {
 
+            Image image = new Image()
+            {
 
+                Aspect = Aspect.AspectFill
+            };
 
             var button = new Button()
             {
@@ -1167,30 +1174,22 @@ namespace Maui.Platform
                 Text = "选择照片",
                 Command = new Command(async () =>
                 {
-                    var fileResult = await _mediaPicker.PickPhotoAsync();
-
-                    var image = new Microsoft.Maui.Controls.Image
+                    if (_mediaPicker.IsCaptureSupported)
                     {
+                        var fileResult = await _mediaPicker.PickPhotoAsync();
 
-                        Aspect = Aspect.AspectFill,
-                        Source = fileResult.FullPath
-                    };
-                    //scrollView.Content = new StackLayout()
-                    //{
+                        if (fileResult is not null)
+                        {
+                            image.Source = fileResult.FullPath;
+                        }
 
-                    //    Children = {
-                    //    new Image
-                    //   {
-                    //       HeightRequest=200,
-                    //       Source = fileResult.FullPath
-                    //   }
-                    //    }
-                    //};
+                    }
 
 
-                    await ModalHelper.ShowScrollViewModalAsync(Navigation, "选择图片", image);
+
                 })
             };
+
 
             //打开相机以拍照
             var buttion2 = new Button()
@@ -1205,34 +1204,25 @@ namespace Maui.Platform
                         FileResult photo = await _mediaPicker?.CapturePhotoAsync();
                         if (photo is not null)
                         {
-                            // save the file into local storage
-                            //string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
-
-                            //Stream sourceStream = await photo.OpenReadAsync();
-                            //FileStream localFileStream = File.OpenWrite(localFilePath);
-
-                            //await sourceStream.CopyToAsync(localFileStream);
-
-                            MainThread.BeginInvokeOnMainThread(async () =>
-                            {
-                                var image = new Microsoft.Maui.Controls.Image
-                                {
-
-                                    Aspect = Aspect.AspectFill,
-                                    Source = ImageSource.FromStream(async (s) => await photo.OpenReadAsync())
-                                };
+                            string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
 
 
+                            using FileStream localFileStream = File.OpenWrite(localFilePath);
 
-                                await ModalHelper.ShowScrollViewModalAsync(Navigation, "选择图片", image);
-                            });
+                            using Stream sourceStream = await photo.OpenReadAsync();
+                            await sourceStream.CopyToAsync(localFileStream);
 
+                            image.Source = photo.FullPath;
                         }
+
                     }
 
                 })
             };
-
+            MediaElement mediaElement = new MediaElement();
+            mediaElement.ShouldShowPlaybackControls = true;
+            mediaElement.ShouldAutoPlay = true;
+            mediaElement.IsVisible = false;
             var buttion3 = new Button()
             {
 
@@ -1242,24 +1232,18 @@ namespace Maui.Platform
                 {
                     if (_mediaPicker.IsCaptureSupported)
                     {
-                        FileResult photo = await _mediaPicker.PickPhotoAsync();
+                        FileResult video = await _mediaPicker.PickVideoAsync();
 
-                        if (photo != null)
+                        if (video is not null)
                         {
-                            // save the file into local storage
-                            string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
-
-                            using Stream sourceStream = await photo.OpenReadAsync();
-                            using FileStream localFileStream = File.OpenWrite(localFilePath);
-
-                            await sourceStream.CopyToAsync(localFileStream);
-                            //await DisplayAlert("提示", $"保存的地址为：{localFilePath}", "OK");
+                            SetMediaElement(mediaElement, video.FullPath);
 
                         }
                     }
 
                 })
             };
+
             var buttion4 = new Button()
             {
 
@@ -1274,20 +1258,31 @@ namespace Maui.Platform
                         if (video != null)
                         {
 
-                            string localFilePath = Path.Combine(FileSystem.CacheDirectory, video.FileName);
+                            //string localFilePath = Path.Combine(FileSystem.CacheDirectory, video.FileName);
 
-                            using Stream sourceStream = await video.OpenReadAsync();
-                            using FileStream localFileStream = File.OpenWrite(localFilePath);
+                            //using Stream sourceStream = await video.OpenReadAsync();
+                            //using FileStream localFileStream = File.OpenWrite(localFilePath);
 
-                            await sourceStream.CopyToAsync(localFileStream);
-                            //await DisplayAlert("提示", $"保存的地址为：{localFilePath}", "OK");
-                            Console.WriteLine($"拍摄视频地址为:{localFilePath}");
+                            //await sourceStream.CopyToAsync(localFileStream);
+                            if (video is not null)
+                            {
+                                SetMediaElement(mediaElement, video.FullPath);
+
+                            }
                         }
                     }
 
                 })
             };
-            await ModalHelper.ShowModalAsync(Navigation, "照片和视频的媒体选取器", button, buttion2, buttion3, buttion4);
+            await ModalHelper.ShowScrollViewModalAsync(Navigation, "照片和视频的媒体选取器", button, buttion2, buttion3, buttion4, image, mediaElement);
+        }
+
+        private void SetMediaElement(MediaElement element, string path)
+        {
+            if (element.IsVisible == false)
+                element.IsVisible = true;
+            element.Source = MediaSource.FromFile(path);
+
         }
 
         /// <summary>
