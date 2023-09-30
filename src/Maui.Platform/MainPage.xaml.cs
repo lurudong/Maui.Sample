@@ -70,196 +70,196 @@ namespace Maui.Platform
         private async void Button_AppInfo(object sender, EventArgs e)
         {
 
-            //string name = _appInfo.Name;
-            //string package = _appInfo.PackageName; //com.microsoft.myapp
-            //string version = _appInfo.VersionString;
-            //string build = _appInfo.BuildString;
+            string name = _appInfo.Name;
+            string package = _appInfo.PackageName; //com.microsoft.myapp
+            string version = _appInfo.VersionString;
+            string build = _appInfo.BuildString;
 
-            //Frame frame1 = new Frame
-            //{
-            //    Padding = new Thickness(5),
-            //    BorderColor = Colors.Black,
-            //    Content = new StackLayout
-            //    {
-            //        Orientation = StackOrientation.Horizontal,
-            //        Spacing = 15,
-            //        Children =
-            //    {
-            //       new Label{
-            //           Text="程序名称:",
-            //           TextColor = Colors.Red
+            Frame frame1 = new Frame
+            {
+                Padding = new Thickness(5),
+                BorderColor = Colors.Black,
+                Content = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Spacing = 15,
+                    Children =
+                {
+                   new Label{
+                       Text="程序名称:",
+                       TextColor = Colors.Red
 
-            //       },
-            //           new Label{
-            //           Text = name
-            //       }
-            //    }
-            //    }
-            //};
+                   },
+                       new Label{
+                       Text = name
+                   }
+                }
+                }
+            };
 
-            //Frame frame2 = new Frame
-            //{
-            //    Padding = new Thickness(5),
-            //    BorderColor = Colors.Black,
-            //    Content = new StackLayout
-            //    {
-            //        Orientation = StackOrientation.Horizontal,
-            //        Spacing = 15,
-            //        Children =
-            //    {
-            //       new Label{
-            //           Text="程序标识符:", //例如 com.microsoft.myapp
-            //           TextColor = Colors.Red
+            Frame frame2 = new Frame
+            {
+                Padding = new Thickness(5),
+                BorderColor = Colors.Black,
+                Content = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Spacing = 15,
+                    Children =
+                {
+                   new Label{
+                       Text="程序标识符:", //例如 com.microsoft.myapp
+                       TextColor = Colors.Red
 
-            //       },
-            //           new Label{
-            //           Text = package
+                   },
+                       new Label{
+                       Text = package
 
-            //       }
-            //    }
-            //    }
-            //};
+                   }
+                }
+                }
+            };
 
-            //Frame frame3 = new Frame
-            //{
-            //    Padding = new Thickness(5),
-            //    BorderColor = Colors.Black,
-            //    Content = new StackLayout
-            //    {
-            //        Orientation = StackOrientation.Horizontal,
-            //        Spacing = 15,
-            //        Children =
-            //    {
-            //       new Label{
-            //           Text="程序版本:", //例如 com.microsoft.myapp
-            //           TextColor = Colors.Red
+            Frame frame3 = new Frame
+            {
+                Padding = new Thickness(5),
+                BorderColor = Colors.Black,
+                Content = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Spacing = 15,
+                    Children =
+                {
+                   new Label{
+                       Text="程序版本:", //例如 com.microsoft.myapp
+                       TextColor = Colors.Red
 
-            //       },
-            //           new Label{
-            //           Text = version
+                   },
+                       new Label{
+                       Text = version
 
-            //       }
-            //    }
-            //    }
-            //};
-
-
-            //Frame frame4 = new Frame
-            //{
-            //    Padding = new Thickness(5),
-            //    BorderColor = Colors.Black,
-            //    Content = new StackLayout
-            //    {
-            //        Orientation = StackOrientation.Horizontal,
-            //        Spacing = 15,
-            //        Children =
-            //    {
-            //       new Label{
-            //           Text="内部版本号:", //例如 com.microsoft.myapp
-            //           TextColor = Colors.Red
-
-            //       },
-            //           new Label{
-            //           Text = build
-
-            //       }
-            //    }
-            //    }
-            //};
+                   }
+                }
+                }
+            };
 
 
-            //Frame frame5 = new Frame
-            //{
-            //    Padding = new Thickness(5),
-            //    BorderColor = Colors.Black,
-            //    Content = new StackLayout
-            //    {
-            //        Orientation = StackOrientation.Horizontal,
-            //        Spacing = 15,
-            //        Children =
-            //    {
-            //       new Label{
-            //           Text="当前主题:",
-            //           TextColor = Colors.Red
+            Frame frame4 = new Frame
+            {
+                Padding = new Thickness(5),
+                BorderColor = Colors.Black,
+                Content = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Spacing = 15,
+                    Children =
+                {
+                   new Label{
+                       Text="内部版本号:", //例如 com.microsoft.myapp
+                       TextColor = Colors.Red
 
-            //       },
-            //           new Label{
-            //           Text = _appInfo.RequestedTheme.ToString()
+                   },
+                       new Label{
+                       Text = build
 
-            //       }
-            //    }
-            //    }
-            //};
-
-            //Frame frame6 = new Frame
-            //{
-            //    Padding = new Thickness(5),
-            //    BorderColor = Colors.Black,
-            //    Content = new StackLayout
-            //    {
-            //        Orientation = StackOrientation.Horizontal,
-            //        Spacing = 15,
-            //        Children =
-            //    {
-            //       new Label{
-            //           Text="布局方向:",
-            //           TextColor = Colors.Red
-
-            //       },
-            //           new Label{
-            //           Text = _appInfo.RequestedLayoutDirection.ToString()
-
-            //       }
-            //    }
-            //    }
-            //};
+                   }
+                }
+                }
+            };
 
 
-            //Frame frame7 = new Frame
-            //{
-            //    Padding = new Thickness(5),
-            //    BorderColor = Colors.Black,
-            //    Content = new StackLayout
-            //    {
-            //        Orientation = StackOrientation.Horizontal,
-            //        Spacing = 15,
-            //        Children =
-            //    {
-            //       new Label{
-            //           Text="打包模型:",
-            //           TextColor = Colors.Red
+            Frame frame5 = new Frame
+            {
+                Padding = new Thickness(5),
+                BorderColor = Colors.Black,
+                Content = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Spacing = 15,
+                    Children =
+                {
+                   new Label{
+                       Text="当前主题:",
+                       TextColor = Colors.Red
 
-            //       },
-            //          new Label{
-            //           Text = _appInfo.PackagingModel==AppPackagingModel.Packaged ? "打包":"未打包"
+                   },
+                       new Label{
+                       Text = _appInfo.RequestedTheme.ToString()
 
-            //       }
-            //    }
-            //    }
-            //};
+                   }
+                }
+                }
+            };
+
+            Frame frame6 = new Frame
+            {
+                Padding = new Thickness(5),
+                BorderColor = Colors.Black,
+                Content = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Spacing = 15,
+                    Children =
+                {
+                   new Label{
+                       Text="布局方向:",
+                       TextColor = Colors.Red
+
+                   },
+                       new Label{
+                       Text = _appInfo.RequestedLayoutDirection.ToString()
+
+                   }
+                }
+                }
+            };
 
 
-            //var openButton = new Button
-            //{
-            //    Text = "显示应用设置",
-            //    Margin = new Thickness(0, 0, 0, 10),
+            Frame frame7 = new Frame
+            {
+                Padding = new Thickness(5),
+                BorderColor = Colors.Black,
+                Content = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Spacing = 15,
+                    Children =
+                {
+                   new Label{
+                       Text="打包模型:",
+                       TextColor = Colors.Red
+
+                   },
+                      new Label{
+                       Text = _appInfo.PackagingModel==AppPackagingModel.Packaged ? "打包":"未打包"
+
+                   }
+                }
+                }
+            };
 
 
-            //};
-            //openButton.Clicked += (sender, e) =>
-            //{
-            //    _appInfo.ShowSettingsUI();
-            //};
-            //StackLayout stackLayout = new StackLayout { Margin = new Thickness(20), Spacing = 6 };
-            //stackLayout.Add(frame1);
-            //stackLayout.Add(frame2);
-            //stackLayout.Add(frame3);
-            //stackLayout.Add(frame4);
-            //stackLayout.Add(frame5);
-            //stackLayout.Add(frame6);
-            //stackLayout.Add(frame7);
+            var openButton = new Button
+            {
+                Text = "显示应用设置",
+                Margin = new Thickness(0, 0, 0, 10),
 
-            //await ModalHelper.ShowModalAsync(Navigation, "应用信息", stackLayout, openButton);
+
+            };
+            openButton.Clicked += (sender, e) =>
+            {
+                _appInfo.ShowSettingsUI();
+            };
+            StackLayout stackLayout = new StackLayout { Margin = new Thickness(20), Spacing = 6 };
+            stackLayout.Add(frame1);
+            stackLayout.Add(frame2);
+            stackLayout.Add(frame3);
+            stackLayout.Add(frame4);
+            stackLayout.Add(frame5);
+            stackLayout.Add(frame6);
+            stackLayout.Add(frame7);
+
+            await ModalHelper.ShowModalAsync(Navigation, "应用信息", stackLayout, openButton);
 
         }
 
@@ -519,7 +519,7 @@ namespace Maui.Platform
                 Content = new StackLayout
                 {
                     Orientation = StackOrientation.Horizontal,
-                    Spacing = 15,
+                    Spacing = 6,
                     Children =
                 {
                    new Label{
@@ -541,7 +541,7 @@ namespace Maui.Platform
                 Content = new StackLayout
                 {
                     Orientation = StackOrientation.Horizontal,
-                    Spacing = 15,
+                    Spacing = 6,
                     Children =
                 {
                    new Label{
@@ -563,7 +563,7 @@ namespace Maui.Platform
                 Content = new StackLayout
                 {
                     Orientation = StackOrientation.Horizontal,
-                    Spacing = 15,
+                    Spacing = 6,
                     Children =
                 {
                    new Label{
@@ -584,7 +584,7 @@ namespace Maui.Platform
                 Content = new StackLayout
                 {
                     Orientation = StackOrientation.Horizontal,
-                    Spacing = 15,
+                    Spacing = 6,
                     Children =
                 {
                    new Label{
@@ -1221,8 +1221,14 @@ namespace Maui.Platform
             };
             MediaElement mediaElement = new MediaElement();
             mediaElement.ShouldShowPlaybackControls = true;
-            mediaElement.ShouldAutoPlay = true;
-            mediaElement.IsVisible = false;
+            mediaElement.ShouldAutoPlay = false;
+            mediaElement.Aspect = Aspect.AspectFit;
+            //var absoluteLayout = new AbsoluteLayout();
+            //AbsoluteLayout.SetLayoutFlags(mediaElement, AbsoluteLayoutFlags.All);
+            //AbsoluteLayout.SetLayoutBounds(mediaElement, new Rectangle(0, 0, 1, 1));
+
+            absoluteLayout.Children.Add(mediaElement);
+            //mediaElement.IsVisible = false;
             var buttion3 = new Button()
             {
 
@@ -1236,7 +1242,11 @@ namespace Maui.Platform
 
                         if (video is not null)
                         {
-                            SetMediaElement(mediaElement, video.FullPath);
+
+                            mediaElement.HeightRequest = 200;
+                            mediaElement.WidthRequest = 200;
+                            //mediaElement.IsVisible = true;
+                            mediaElement.Source = MediaSource.FromFile(video.FullPath);
 
                         }
                     }
@@ -1281,6 +1291,8 @@ namespace Maui.Platform
         {
             if (element.IsVisible == false)
                 element.IsVisible = true;
+            element.HeightRequest = 110;
+            element.WidthRequest = 110;
             element.Source = MediaSource.FromFile(path);
 
         }
