@@ -1227,7 +1227,7 @@ namespace Maui.Platform
             //AbsoluteLayout.SetLayoutFlags(mediaElement, AbsoluteLayoutFlags.All);
             //AbsoluteLayout.SetLayoutBounds(mediaElement, new Rectangle(0, 0, 1, 1));
 
-            absoluteLayout.Children.Add(mediaElement);
+            //absoluteLayout.Children.Add(mediaElement);
             //mediaElement.IsVisible = false;
             var buttion3 = new Button()
             {
