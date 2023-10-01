@@ -488,6 +488,8 @@ namespace Maui.Platform
                 string familyName = contact.FamilyName;
                 string nameSuffix = contact.NameSuffix;
                 string displayName = contact.DisplayName;
+                //List<ContactPhone> phones = contact.Phones; // List of phone numbers
+                //List<ContactEmail> emails = contact.Emails; // List of email addresses
             }
             catch (Exception ex)
             {
@@ -892,7 +894,7 @@ namespace Maui.Platform
             var button1 = new Button
             {
                 Margin = new Thickness(0, 0, 0, 10),
-                Text = "使用地理编码",
+                Text = "反向地理编码",
 
             };
             button1.Clicked += GetGeocodeReverseData;
@@ -905,7 +907,7 @@ namespace Maui.Platform
         {
             try
             {
-                string address = "Microsoft Building 25 Redmond WA USA";
+                string address = "广州天河区";
                 IEnumerable<Location> locations = await _geocoding.GetLocationsAsync(address);
 
                 Location location = locations?.FirstOrDefault();
@@ -913,7 +915,7 @@ namespace Maui.Platform
 
                 if (location != null)
                 {
-                    await DisplayAlert("提示", $"纬度: {location.Latitude}, 经度: {location.Longitude}, 高度: {location.Altitude}", "OK");
+                    await DisplayAlert("提示", $"地址：{address},纬度: {location.Latitude}, 经度: {location.Longitude}, 高度: {location.Altitude}", "OK");
                 }
             }
             catch (Exception ex)
@@ -945,7 +947,7 @@ namespace Maui.Platform
                     sb.AppendLine($"次级地点: {placemark.SubLocality}");
                     sb.AppendLine($"次干道: {placemark.SubThoroughfare}");
                     sb.AppendLine($"大道: {placemark.Thoroughfare}");
-                    await DisplayAlert("提示", $"地理编码:{sb.ToString()}", "地理编码");
+                    await DisplayAlert("提示", $"{sb.ToString()}", "确定");
                 }
 
 
@@ -1204,7 +1206,7 @@ namespace Maui.Platform
                         FileResult photo = await _mediaPicker?.CapturePhotoAsync();
                         if (photo is not null)
                         {
-                            string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
+                            string localFilePath = System.IO.Path.Combine(FileSystem.CacheDirectory, photo.FileName);
 
 
                             using FileStream localFileStream = File.OpenWrite(localFilePath);
@@ -1220,15 +1222,10 @@ namespace Maui.Platform
                 })
             };
             MediaElement mediaElement = new MediaElement();
+            mediaElement.IsVisible = false;
+            mediaElement.Aspect = Aspect.AspectFill;
             mediaElement.ShouldShowPlaybackControls = true;
-            mediaElement.ShouldAutoPlay = false;
-            mediaElement.Aspect = Aspect.AspectFit;
-            //var absoluteLayout = new AbsoluteLayout();
-            //AbsoluteLayout.SetLayoutFlags(mediaElement, AbsoluteLayoutFlags.All);
-            //AbsoluteLayout.SetLayoutBounds(mediaElement, new Rectangle(0, 0, 1, 1));
 
-            //absoluteLayout.Children.Add(mediaElement);
-            //mediaElement.IsVisible = false;
             var buttion3 = new Button()
             {
 
@@ -1243,11 +1240,12 @@ namespace Maui.Platform
                         if (video is not null)
                         {
 
-                            mediaElement.HeightRequest = 200;
-                            mediaElement.WidthRequest = 200;
+                            //mediaElement.HeightRequest = 200;
+                            //mediaElement.WidthRequest = 200;
                             //mediaElement.IsVisible = true;
-                            mediaElement.Source = MediaSource.FromFile(video.FullPath);
-
+                            //mediaElement.Source = MediaSource.FromFile(video.FullPath);
+                            SetMediaElement(mediaElement, video.FullPath);
+                            //await ModalHelper.ShowScrollViewModalAsync(Navigation, "照片和视频的媒体选取器", container);
                         }
                     }
 
@@ -1276,23 +1274,28 @@ namespace Maui.Platform
                             //await sourceStream.CopyToAsync(localFileStream);
                             if (video is not null)
                             {
+                                //SetMediaElement(mediaElement, video.FullPath);
                                 SetMediaElement(mediaElement, video.FullPath);
-
                             }
                         }
                     }
-
                 })
             };
+
+
             await ModalHelper.ShowScrollViewModalAsync(Navigation, "照片和视频的媒体选取器", button, buttion2, buttion3, buttion4, image, mediaElement);
         }
+
+
 
         private void SetMediaElement(MediaElement element, string path)
         {
             if (element.IsVisible == false)
                 element.IsVisible = true;
-            element.HeightRequest = 110;
-            element.WidthRequest = 110;
+
+
+            element.HeightRequest = 270;
+            element.WidthRequest = 270;
             element.Source = MediaSource.FromFile(path);
 
         }
@@ -1379,46 +1382,30 @@ namespace Maui.Platform
             {
                 Margin = new Thickness(0, 0, 0, 10),
                 Text = "设置剪贴板",
-                //Command = new Command(async () =>
-                //{
-
-                //    await _clipboard.SetTextAsync("This text was highlighted in the UI.");
-                //})
-
-            };
-            button.Clicked += async (_, _) =>
-            {
-                MainThread.BeginInvokeOnMainThread(async () =>
+                Command = new Command(async () =>
                 {
 
-                    await _clipboard.SetTextAsync("This text was highlighted in the UI.");
-                });
+                    await _clipboard.SetTextAsync("该文本在UI中突出显示。");
+                })
 
             };
+            Label label = new Label();
+            label.Margin = new Thickness(0, 0, 0, 10);
             Button readButton = new Button
             {
                 Margin = new Thickness(0, 0, 0, 10),
                 Text = "读剪贴板",
-                Command = new Command(() =>
+                Command = new Command(async () =>
                 {
-                    MainThread.BeginInvokeOnMainThread(async () =>
-                    {
 
-                        string text = "";
-                        text = await _clipboard.GetTextAsync();
-                        await _clipboard.SetTextAsync(null);
-                        //if (_clipboard.HasText)
-                        //{
-                        //    text = await _clipboard.GetTextAsync();
-                        //    await _clipboard.SetTextAsync(null);
-                        //}
-                        await DisplayAlert("提示", $"读剪贴板数据为：{text}", "OK");
-                    });
+                    string text = "";
+                    text = await _clipboard.GetTextAsync();
+                    label.Text = text;
 
                 })
 
             };
-            await ModalHelper.ShowModalAsync(Navigation, "剪贴板", button, readButton);
+            await ModalHelper.ShowModalAsync(Navigation, "剪贴板", button, readButton, label);
 
         }
 
@@ -1455,7 +1442,7 @@ namespace Maui.Platform
                 {
 
                     string fn = "Attachment.txt";
-                    string file = Path.Combine(FileSystem.CacheDirectory, fn);
+                    string file = System.IO.Path.Combine(FileSystem.CacheDirectory, fn);
 
                     File.WriteAllText(file, "Hello World");
 
@@ -1474,8 +1461,8 @@ namespace Maui.Platform
                 Command = new Command(async () =>
                 {
 
-                    string file1 = Path.Combine(FileSystem.CacheDirectory, "Attachment1.txt");
-                    string file2 = Path.Combine(FileSystem.CacheDirectory, "Attachment2.txt");
+                    string file1 = System.IO.Path.Combine(FileSystem.CacheDirectory, "Attachment1.txt");
+                    string file2 = System.IO.Path.Combine(FileSystem.CacheDirectory, "Attachment2.txt");
 
                     File.WriteAllText(file1, "Content 1");
                     File.WriteAllText(file2, "Content 2");
@@ -1573,13 +1560,17 @@ namespace Maui.Platform
         private async void Preferences_Clicked(object sender, EventArgs e)
         {
             // Set a string value:
-            _preferences.Set("first_name", "John");
 
-            // Set an numerical value:
-            _preferences.Set("age", 28);
+            if (_preferences.ContainsKey("first_name"))
+                _preferences.Set("first_name", "John");
 
-            // Set a boolean value:
-            _preferences.Set("has_pets", true);
+
+            if (_preferences.ContainsKey("age"))
+                _preferences.Set("age", 28);
+
+            if (_preferences.ContainsKey("has_pets"))
+                _preferences.Set("has_pets", true);
+
 
             string firstName = _preferences.Get("first_name", "Unknown");
             int age = _preferences.Get("age", -1);
@@ -1664,6 +1655,7 @@ namespace Maui.Platform
 
             };
             var entry2 = new Entry
+
             {
                 Margin = new Thickness(0, 0, 0, 10),
                 Placeholder = "请输入年龄"
@@ -1757,8 +1749,10 @@ namespace Maui.Platform
             layout.Add(entry2);
             layout.Add(button);
             layout.Add(listView);
-            await ModalHelper.ShowModalAsync(Navigation, "本地存储", layout);
+            await ModalHelper.ShowScrollViewModalAsync(Navigation, "本地存储", layout);
         }
+
+
     }
 
 

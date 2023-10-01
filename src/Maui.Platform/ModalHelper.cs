@@ -47,9 +47,14 @@ public class ModalHelper
             Spacing = 10
         };
 
+
+
+
         foreach (var view in views)
         {
+
             stackLayout.Children.Add(view);
+
         }
 
         var button = new Button
