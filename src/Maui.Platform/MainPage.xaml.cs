@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Markup;
 using CommunityToolkit.Maui.Views;
 using Maui.Platform.Model;
 using Maui.Platform.Seevices;
@@ -36,8 +37,12 @@ namespace Maui.Platform
         private readonly IPreferences _preferences;
         private readonly ISecureStorage _secureStorage;
         private readonly IUserService _userService;
+        private readonly IEmail _email;
+        private readonly IConnectivity _connectivity;
+        private readonly IPhoneDialer _phoneDialer;
+        private readonly ISms _sms;
 
-        public MainPage(IAppInfo appInfo, ILauncher launcher = null, IMap map = null, IContacts contacts = null, IBattery battery = null, IDeviceDisplay deviceDisplay = null, IDeviceInfo deviceInfo = null, IAccelerometer accelerometer = null, IFlashlight flashlight = null, IGeocoding geocoding = null, IGeolocation geolocation = null, IHapticFeedback hapticFeedback = null, IVibration vibration = null, IMediaPicker mediaPicker = null, IScreenshot screenshot = null, ITextToSpeech textToSpeech = null, IClipboard clipboard = null, IShare share = null, IFilePicker filePicker = null, IFileSystem fileSystem = null, IPreferences preferences = null, ISecureStorage secureStorage = null, IUserService userService = null)
+        public MainPage(IAppInfo appInfo, ILauncher launcher = null, IMap map = null, IContacts contacts = null, IBattery battery = null, IDeviceDisplay deviceDisplay = null, IDeviceInfo deviceInfo = null, IAccelerometer accelerometer = null, IFlashlight flashlight = null, IGeocoding geocoding = null, IGeolocation geolocation = null, IHapticFeedback hapticFeedback = null, IVibration vibration = null, IMediaPicker mediaPicker = null, IScreenshot screenshot = null, ITextToSpeech textToSpeech = null, IClipboard clipboard = null, IShare share = null, IFilePicker filePicker = null, IFileSystem fileSystem = null, IPreferences preferences = null, ISecureStorage secureStorage = null, IUserService userService = null, IEmail email = null, IConnectivity connectivity = null, IPhoneDialer phoneDialer = null, ISms sms = null)
         {
             InitializeComponent();
             _appInfo = appInfo;
@@ -63,6 +68,10 @@ namespace Maui.Platform
             _preferences = preferences;
             _secureStorage = secureStorage;
             _userService = userService;
+            _email = email;
+            _connectivity = connectivity;
+            _phoneDialer = phoneDialer;
+            _sms = sms;
         }
 
 
@@ -460,27 +469,24 @@ namespace Maui.Platform
         private async void Contacts_Clicked(object sender, EventArgs e)
         {
 
-            try
+
+
+
+
+
+
+
+            Button button = new Button().Text("联系人");
+            button.Command = new Command(async () =>
             {
-                // 请求读取联系人权限
-                var status = await Permissions.RequestAsync<Permissions.ContactsRead>();
-                var status1 = await Permissions.RequestAsync<Permissions.ContactsWrite>();
-                if (status != PermissionStatus.Granted && status1 != PermissionStatus.Granted)
-                {
-                    await DisplayAlert("错误", $"没有ContactsRead权限", "OK");
-                    // 执行读取联系人的操作
-                    return;
-                }
 
-                var contacts = await _contacts.GetAllAsync();
-
-                //选择联系人
                 var contact = await _contacts.PickContactAsync();
 
                 if (contact == null)
                 {
                     return;
                 }
+
                 string id = contact.Id;
                 string namePrefix = contact.NamePrefix;
                 string givenName = contact.GivenName;
@@ -488,14 +494,48 @@ namespace Maui.Platform
                 string familyName = contact.FamilyName;
                 string nameSuffix = contact.NameSuffix;
                 string displayName = contact.DisplayName;
-                //List<ContactPhone> phones = contact.Phones; // List of phone numbers
-                //List<ContactEmail> emails = contact.Emails; // List of email addresses
-            }
-            catch (Exception ex)
-            {
+                var phone = string.Join("", contact.Phones.Select(o => o.PhoneNumber)); // List of phone numbers
 
-                await DisplayAlert("错误", $"{ex.Message}", "OK");
-            }
+                await DisplayAlert("提示", $"用户名：{displayName},电话号码为：{phone}", "OK");
+
+            });
+
+            Button button2 = new Button().Text("获取所有联系人");
+            button2.Command = new Command(async () =>
+            {
+                StringBuilder sb = new StringBuilder();
+                var names = GetContactNames();
+
+                await foreach (var item in names)
+                {
+                    sb.AppendLine(item);
+                }
+                await DisplayAlert("获取所有联系人", $"{sb.ToString()}", "OK");
+
+            });
+
+
+
+
+
+
+
+            // 设置ListView的数据模板
+
+            await ModalHelper.ShowScrollViewModalAsync(Navigation, "联系人", button, button2);
+        }
+
+
+        private async IAsyncEnumerable<string> GetContactNames()
+        {
+            var contacts = await _contacts.GetAllAsync();
+
+            // No contacts
+            if (contacts == null)
+                yield break;
+
+            foreach (var contact in contacts)
+                yield return contact.DisplayName;
         }
 
 
@@ -1752,8 +1792,126 @@ namespace Maui.Platform
             await ModalHelper.ShowScrollViewModalAsync(Navigation, "本地存储", layout);
         }
 
+        /// <summary>
+        /// 电子邮件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private async void Email_Clicked(object sender, EventArgs e)
+        {
+            if (_email.IsComposeSupported)
+            {
+
+                string subject = "你好朋友!";
+                string body = "很高兴上周末见到你.";
+                string[] recipients = new[] { "179722134@qq.com", "179722134@qq.com" };
+
+                var message = new EmailMessage
+                {
+                    Subject = subject,
+                    Body = body,
+                    BodyFormat = EmailBodyFormat.PlainText,
+                    To = new List<string>(recipients)
+                };
+
+                await _email.ComposeAsync(message);
+            }
+        }
+
+
+        /// <summary>
+        /// 网络
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Connectivity_Clicked(object sender, EventArgs e)
+        {
+
+            Button button = new Button().Text("网络的范围");
+            button.Command = new Command(async () =>
+            {
+                StringBuilder sb = new StringBuilder();
+                var networkAccess = _connectivity.NetworkAccess;
+                switch (networkAccess)
+                {
+                    case NetworkAccess.Internet:
+                        sb.AppendLine("本地和 Internet 访问。");
+                        break;
+                    case NetworkAccess.ConstrainedInternet:
+                        sb.AppendLine("Internet 访问受限。 此值表示存在一个强制门户，其中提供了对 Web 门户的本地访问。 使用门户提供身份验证凭据后，将授予 Internet 访问权限。");
+                        break;
+                    case NetworkAccess.Local:
+                        sb.AppendLine("仅限本地网络访问。");
+                        break;
+                    case NetworkAccess.None:
+                        sb.AppendLine("没有可用的连接。");
+                        break;
+                    case NetworkAccess.Unknown:
+                        sb.AppendLine("无法确定 Internet 连接。");
+                        break;
+                }
+
+                await DisplayAlert("网络的范围", sb.ToString(), "确定");
+
+            });
+
+
+            new ConnectivityTest();
+            await ModalHelper.ShowScrollViewModalAsync(Navigation, "网络", button);
+
+        }
+
+        /// <summary>
+        /// 电话拨号程序
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void PhoneDialer_Clicked(object sender, EventArgs e)
+        {
+            Editor editor = new Editor().Placeholder("请输入电话号码");
+            Button button = new Button().Text("电话拨号");
+            button.Command = new Command(() =>
+            {
+
+                if (_phoneDialer.IsSupported)
+                {
+                    _phoneDialer.Open(editor.Text);
+                }
+            });
+            await ModalHelper.ShowScrollViewModalAsync(Navigation, "电话拨号", editor, button);
+        }
+
+        /// <summary>
+        /// SMS
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void SMS_Clicked(object sender, EventArgs e)
+        {
+            Editor editor = new Editor().Placeholder("请输入接受者");
+            Button button = new Button().Text("发短信");
+            button.Command = new Command(async () =>
+            {
+
+                if (_sms.IsComposeSupported)
+                {
+                    //_phoneDialer.Open(editor.Text);
+                    string[] recipients = new[] { editor.Text };
+                    string text = "你好，我对你的花瓶很感兴趣。";
+
+                    var message = new SmsMessage(text, recipients);
+                    await _sms.ComposeAsync(message);
+
+                }
+            });
+            await ModalHelper.ShowScrollViewModalAsync(Navigation, "SMS", editor, button);
+        }
 
     }
+
+
+
 
 
 }

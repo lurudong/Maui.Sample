@@ -60,6 +60,10 @@ namespace Maui.Platform
             builder.Services.AddSingleton<IFileSystem>(FileSystem.Current);
             builder.Services.AddSingleton<IPreferences>(Preferences.Default);
             builder.Services.AddSingleton<ISecureStorage>(SecureStorage.Default);
+            builder.Services.AddSingleton<IEmail>(Email.Default);
+            builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
+            builder.Services.AddSingleton<IPhoneDialer>(PhoneDialer.Default);
+            builder.Services.AddSingleton<ISms>(Sms.Default);
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddSingleton<IDatabaseStorage>(_ =>
              {
