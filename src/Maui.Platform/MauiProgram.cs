@@ -3,6 +3,7 @@ using CommunityToolkit.Maui.Markup;
 using Maui.Platform.Model;
 using Maui.Platform.Seevices;
 using Microsoft.Extensions.Logging;
+using Plugin.Maui.CalendarStore;
 using UraniumUI;
 using Communication = Microsoft.Maui.ApplicationModel.Communication;
 using Constants = Maui.Platform.Help.Constants;
@@ -35,7 +36,7 @@ namespace Maui.Platform
                 options.SetShouldSuppressExceptionsInBehaviors(false);
                 options.SetShouldSuppressExceptionsInAnimations(false);
             });
-            builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddTransient<MainPage>();
             builder.Services.AddSingleton<IAppInfo>(AppInfo.Current);
             builder.Services.AddSingleton<ILauncher>(Launcher.Default);
 
@@ -65,6 +66,7 @@ namespace Maui.Platform
             builder.Services.AddSingleton<IPhoneDialer>(PhoneDialer.Default);
             builder.Services.AddSingleton<ISms>(Sms.Default);
             builder.Services.AddSingleton<IWebAuthenticator>(WebAuthenticator.Default);
+            builder.Services.AddSingleton<ICalendarStore>(CalendarStore.Default);
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddSingleton<IDatabaseStorage>(_ =>
              {
