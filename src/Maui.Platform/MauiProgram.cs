@@ -64,6 +64,7 @@ namespace Maui.Platform
             builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
             builder.Services.AddSingleton<IPhoneDialer>(PhoneDialer.Default);
             builder.Services.AddSingleton<ISms>(Sms.Default);
+            builder.Services.AddSingleton<IWebAuthenticator>(WebAuthenticator.Default);
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddSingleton<IDatabaseStorage>(_ =>
              {

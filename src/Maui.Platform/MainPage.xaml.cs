@@ -41,8 +41,9 @@ namespace Maui.Platform
         private readonly IConnectivity _connectivity;
         private readonly IPhoneDialer _phoneDialer;
         private readonly ISms _sms;
+        private readonly IWebAuthenticator _webAuthenticator;
 
-        public MainPage(IAppInfo appInfo, ILauncher launcher = null, IMap map = null, IContacts contacts = null, IBattery battery = null, IDeviceDisplay deviceDisplay = null, IDeviceInfo deviceInfo = null, IAccelerometer accelerometer = null, IFlashlight flashlight = null, IGeocoding geocoding = null, IGeolocation geolocation = null, IHapticFeedback hapticFeedback = null, IVibration vibration = null, IMediaPicker mediaPicker = null, IScreenshot screenshot = null, ITextToSpeech textToSpeech = null, IClipboard clipboard = null, IShare share = null, IFilePicker filePicker = null, IFileSystem fileSystem = null, IPreferences preferences = null, ISecureStorage secureStorage = null, IUserService userService = null, IEmail email = null, IConnectivity connectivity = null, IPhoneDialer phoneDialer = null, ISms sms = null)
+        public MainPage(IAppInfo appInfo, ILauncher launcher = null, IMap map = null, IContacts contacts = null, IBattery battery = null, IDeviceDisplay deviceDisplay = null, IDeviceInfo deviceInfo = null, IAccelerometer accelerometer = null, IFlashlight flashlight = null, IGeocoding geocoding = null, IGeolocation geolocation = null, IHapticFeedback hapticFeedback = null, IVibration vibration = null, IMediaPicker mediaPicker = null, IScreenshot screenshot = null, ITextToSpeech textToSpeech = null, IClipboard clipboard = null, IShare share = null, IFilePicker filePicker = null, IFileSystem fileSystem = null, IPreferences preferences = null, ISecureStorage secureStorage = null, IUserService userService = null, IEmail email = null, IConnectivity connectivity = null, IPhoneDialer phoneDialer = null, ISms sms = null, IWebAuthenticator webAuthenticator = null)
         {
             InitializeComponent();
             _appInfo = appInfo;
@@ -72,6 +73,7 @@ namespace Maui.Platform
             _connectivity = connectivity;
             _phoneDialer = phoneDialer;
             _sms = sms;
+            _webAuthenticator = webAuthenticator;
         }
 
 
@@ -1906,6 +1908,29 @@ namespace Maui.Platform
                 }
             });
             await ModalHelper.ShowScrollViewModalAsync(Navigation, "SMS", editor, button);
+        }
+
+        /// <summary>
+        /// web验证器
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void WebAuthenticator_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                WebAuthenticatorResult authResult = await _webAuthenticator.AuthenticateAsync(
+                    new Uri("https://mysite.com/mobileauth/Microsoft"),
+                    new Uri("myapp://"));
+
+                string accessToken = authResult?.AccessToken;
+
+
+            }
+            catch (TaskCanceledException)
+            {
+
+            }
         }
 
     }

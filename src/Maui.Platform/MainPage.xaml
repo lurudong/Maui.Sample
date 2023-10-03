@@ -64,7 +64,7 @@
             <Button Grid.Row="8" Grid.Column="2" Text="网络" ToolTipProperties.Text="网络" Clicked="Connectivity_Clicked"></Button>
             <Button Grid.Row="9" Grid.Column="2" Text="电话拨号" ToolTipProperties.Text="电话拨号" Clicked="PhoneDialer_Clicked"></Button>
             <Button Grid.Row="10" Grid.Column="2" Text="SMS" ToolTipProperties.Text="SMS" Clicked="SMS_Clicked"></Button>
-            <Button Grid.Row="11" Grid.Column="2" Text="Web验证器" ToolTipProperties.Text="验证器"></Button>
+            <Button Grid.Row="11" Grid.Column="2" Text="Web验证器" ToolTipProperties.Text="验证器" Clicked="WebAuthenticator_Clicked"></Button>
             <Button Grid.Row="2" Grid.Column="0"  Text="浏览器" ToolTipProperties.Text="浏览器" Clicked="BrowserOpen_Clicked" ></Button>
 
             <Button Grid.Row="3" Grid.Column="0"  Text="启动器" ToolTipProperties.Text="启动器" Clicked="Launcher_Clicked"></Button>
